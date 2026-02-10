@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "baseUrl": ".",
+        "paths": {
+        "@repo/schemas/*": ["packages/schemas/src/*"],
+        "@repo/db/*": ["packages/db/src/*"]
+        }
+    }
+}
