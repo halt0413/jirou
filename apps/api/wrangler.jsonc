@@ -1,6 +1,21 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "api",
-  "main": "src/index.ts",
-  "compatibility_date": "2026-02-09"
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "api",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-02-09",
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "58hack-db",
+			"database_id": "8f8c6fb4-66b4-4631-8f5a-a65427ff9360",
+			"remote": true
+		}
+	],
+	"r2_buckets": [
+		{
+			"bucket_name": "58hack-images",
+			"binding": "BUCKET",
+			"remote": true
+		}
+	]
 }
