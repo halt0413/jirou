@@ -1,20 +1,8 @@
 import { Hono } from 'hono'
-import { Env } from './types/env'
-// import { getDB } from './db/client'
-// import { users } from './db/schema'
+import postsRoute from './presentation/posts/posts.route';
 
-const app = new Hono<{Bindings : Env }>();
+const app = new Hono();
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
-
-//テスト
-// app.get("/users", async (c) => {
-//   const db = getDB(c.env);
-//   const result = await db.select().from(users);
-//   return c.json(result);
-// });
-
+app.route("post", postsRoute);
 
 export default app

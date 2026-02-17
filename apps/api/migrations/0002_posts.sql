@@ -3,6 +3,7 @@
 CREATE TABLE posts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id TEXT NOT NULL,
+    store_name TEXT NOT NULL,
     score INTEGER NOT NULL,
     comment TEXT,
     image_key TEXT, --R2key
