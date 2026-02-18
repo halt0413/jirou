@@ -1,31 +1,23 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import { z } from "zod"
+import { Env } from "../../types/env";
+import { createContainer } from "../../container";
+import { CreatePostSchema } from "@repo/schemas";
 
-const createPost = z.object({
-    score: z.number().min(1).max(5),
-    comment: z.string().optional(),
-    imageKey: z.string().optional(),
-})
+const postsRoute = new Hono<{Bindings:Env}>();
 
-const postsRoute = new Hono<{Bindings: {DB: D1Database}}>();
-
-postsRoute.post("/", zValidator("json", createPost), async (c) => {
+postsRoute.post("/", zValidator("json", CreatePostSchema), async (c) => {
     const body = c.req.valid("json")
-
     //後で差し替え
     const userId = "test"
-
-    const { createPostUseCase } = createCntainer(c.env.DB);
-
+    const { createPostUseCase } = createContainer(c.env);
+    
     try {
         const post = await createPostUseCase.execute({
             ...body,
             userId,
-            comment: body.comment ?? null,
-            imageKey: body.imageKey ?? null,
         });
-        return c.json(post, 201)
+        return c.json(post, 201);
     } catch (error) {
         return c.json({error: "エラー" }, 500);
     }
