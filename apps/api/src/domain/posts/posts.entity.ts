@@ -5,7 +5,7 @@ export class Posts {
         public readonly userId: string,
         public readonly score: number,
         public readonly comment: string | null,
-        public readonly imageKey: string,
-        public readonly created_at: Date,
+        public readonly imageKey: string | null,
+        public readonly createdAt: Date,
     ){}
 }

@@ -3,6 +3,6 @@ import postsRoute from './presentation/posts/posts.route';
 
 const app = new Hono();
 
-app.route("post", postsRoute);
+app.route("posts", postsRoute);
 
 export default app
