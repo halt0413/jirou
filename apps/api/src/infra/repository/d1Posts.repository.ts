@@ -15,7 +15,7 @@ export class D1PostsRepository implements PostsRepository {
             score: post.score,
             comment: post.comment,
             imageKey: post.imageKey,
-            createdAt: new Date().toISOString(),
+            createdAt: post.createdAt.toISOString(),
             });
         const insertedId = result.meta?.last_row_id;
             
@@ -24,5 +24,18 @@ export class D1PostsRepository implements PostsRepository {
         }
 
         return  Number(insertedId)
+    }
+
+    async findByUserId(userId: string): Promise<Posts[]> {
+        const result = await this.db.select().from(schema.posts).where(eq(schema.posts.userId, userId));
+        return result.map((row) => new Posts(
+            row.id,
+            row.storeName,
+            row.userId,
+            row.score,
+            row.comment,
+            row.imageKey,
+            new Date(row.createdAt)
+        ));
     }
 }
