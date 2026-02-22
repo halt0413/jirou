@@ -6,6 +6,6 @@ export class Posts {
         public readonly score: number,
         public readonly comment: string | null,
         public readonly imageKey: string | null,
-        public readonly createdAt: Date,
+        public readonly createdAt: Date = new Date(),
     ){}
 }

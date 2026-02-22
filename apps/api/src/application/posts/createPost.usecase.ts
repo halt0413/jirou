@@ -6,11 +6,11 @@ import type { CreatePostInput } from "@repo/schemas";
 export class CreatePostUseCase {
     constructor(private repo: PostsRepository){}
 
-    async execute(input: CreatePostInput): Promise<Posts> {
+    async execute(input: CreatePostInput, userId: string): Promise<Posts> {
         const post = new Posts(
             undefined, 
             input.storeName,
-            input.userId,
+            userId,
             input.score,
             input.comment ?? null,
             input.imageKey ?? null,
