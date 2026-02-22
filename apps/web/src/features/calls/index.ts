@@ -1,1 +1,1 @@
-export * from "./pages/CallsPlayPage";
+export * from "./components/CallsPlayContainer";
