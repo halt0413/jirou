@@ -9,12 +9,19 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     defaults:
       run:
         working-directory: workers/voicevox-proxy
 
     steps:
       - uses: actions/checkout@v4
+
+      # ⭐ これ追加（重要）
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
 
       - name: Deploy dev Worker
         if: github.ref == 'refs/heads/dev'
