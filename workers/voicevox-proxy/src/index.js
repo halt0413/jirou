@@ -32,4 +32,4 @@ export default {
       headers,
     });
   },
-};// trigger deploy
+};
