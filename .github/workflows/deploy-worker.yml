@@ -1,25 +1,22 @@
-name: Deploy-Worker
+name: Deploy Worker
 
 on:
   push:
-    branches:
-      - dev
-      - main
+    branches: [dev, main]
     paths:
-      - "workers/jirou/**"
+      - "workers/voicevox-proxy/**"
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     defaults:
       run:
-        working-directory: workers/jirou
+        working-directory: workers/voicevox-proxy
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Deploy Worker (dev)
+      - name: Deploy dev Worker
         if: github.ref == 'refs/heads/dev'
         uses: cloudflare/wrangler-action@v3
         with:
@@ -27,7 +24,7 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy --name jirou-dev
 
-      - name: Deploy Worker (main)
+      - name: Deploy prod Worker
         if: github.ref == 'refs/heads/main'
         uses: cloudflare/wrangler-action@v3
         with:
