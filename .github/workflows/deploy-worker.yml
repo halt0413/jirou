@@ -1,4 +1,4 @@
-name: Deploy Worker (bun)
+name: Deploy Worker 
 
 on:
   push:
@@ -9,7 +9,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     defaults:
       run:
         working-directory: workers/voicevox-proxy
@@ -22,17 +21,16 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Install deps
-        run: bun add -d wrangler
-
       - name: Deploy dev Worker
         if: github.ref == 'refs/heads/dev'
         run: bunx --yes wrangler@3 deploy --name jirou-dev
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
       - name: Deploy prod Worker
         if: github.ref == 'refs/heads/main'
-        run: bunx --yes wrangler@3 deploy --name jirou-prod
+        run: bunx --yes wrangler@3 deploy --name jirou
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

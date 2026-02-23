@@ -1,4 +1,3 @@
-//deploy
 export default {
   async fetch(request, env) {
     const ORIGIN = env.ORIGIN;
