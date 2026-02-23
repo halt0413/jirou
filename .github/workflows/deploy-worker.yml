@@ -1,0 +1,36 @@
+name: Deploy-Worker
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+    paths:
+      - "workers/jirou/**"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: workers/jirou
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy Worker (dev)
+        if: github.ref == 'refs/heads/dev'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy --name jirou-dev
+
+      - name: Deploy Worker (main)
+        if: github.ref == 'refs/heads/main'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy --name jirou
