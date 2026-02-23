@@ -27,12 +27,12 @@ jobs:
 
       - name: Deploy dev Worker
         if: github.ref == 'refs/heads/dev'
-        run: bunx wrangler deploy --name jirou-dev
+        run: bunx --yes wrangler@3 deploy --name jirou-dev
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
       - name: Deploy prod Worker
         if: github.ref == 'refs/heads/main'
-        run: bunx wrangler deploy --name jirou
+        run: bunx --yes wrangler@3 deploy --name jirou-prod
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
