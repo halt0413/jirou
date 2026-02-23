@@ -1,4 +1,4 @@
-name: Deploy Worker
+name: Deploy Worker (bun)
 
 on:
   push:
@@ -17,24 +17,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # ⭐ これ追加（重要）
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest
 
+      - name: Install deps
+        run: bun add -d wrangler
+
       - name: Deploy dev Worker
         if: github.ref == 'refs/heads/dev'
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy --name jirou-dev
+        run: bunx wrangler deploy --name jirou-dev
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
       - name: Deploy prod Worker
         if: github.ref == 'refs/heads/main'
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy --name jirou
+        run: bunx wrangler deploy --name jirou
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
