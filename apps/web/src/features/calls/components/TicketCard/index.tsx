@@ -1,5 +1,5 @@
-import styles from "./TicketCard.module.css";
-import { toHalfWidthKana } from "../lib/toHalfWidthKana";
+import styles from "./index.module.css";
+import { toHalfWidthKana } from "../../../../utils/toHalfWidthKana";
 
 export type TicketCardProps = {
   dateText?: string;      // "26, -6, -9" みたいなやつ

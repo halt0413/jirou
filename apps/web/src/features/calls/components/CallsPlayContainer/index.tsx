@@ -1,11 +1,11 @@
 "use client";
 
-import styles from "./CallsPlayContainer.module.css";
+import styles from "./index.module.css";
 import { useState } from "react";
-import { CallSelect } from "./CallSelect";
-import { TicketCard } from "./TicketCard";
-import { PlayButton } from "./PlayButton";
-import { Button } from "@/shared/ui/Button";
+import { CallSelect } from "../CallSelect";
+import { TicketCard } from "../TicketCard";
+import { PlayButton } from "../PlayButton";
+import { Button } from "@/features/calls/components/Button";
 
 export const CallsPlayPage = () => {
   const [selectedId, setSelectedId] = useState("1");

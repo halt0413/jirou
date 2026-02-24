@@ -1,4 +1,4 @@
-import styles from "./CallSelect.module.css";
+import styles from "./index.module.css";
 
 type CallOption = { id: string; label: string; };
 
