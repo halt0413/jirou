@@ -2,8 +2,6 @@ import type { UserRepository } from "../../domain/users/user.repository";
 import type { PasswordHasher } from "../../domain/users/user.password_hasher";
 import type { TokenProvider } from "../../domain/users/user.token_provider";
 
-import { sign } from "hono/jwt";
-
 export class LoginUserUseCase {
   constructor(
     private userRepository: UserRepository,

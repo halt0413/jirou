@@ -2,19 +2,7 @@ import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import type { Env } from "../../types/env";
 import { createContainer } from "../../container";
-import { z } from "zod";
-
-// バリデーションSchema
-const RegisterSchema = z.object({
-  name: z.string().min(1),
-  email: z.string().email(),
-  password: z.string().min(6),
-});
-
-const LoginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6),
-});
+import { LoginSchema, RegisterSchema } from "@repo/schemas";
 
 const usersRoute = new Hono<{ Bindings: Env }>();
 
