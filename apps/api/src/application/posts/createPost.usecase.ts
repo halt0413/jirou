@@ -16,7 +16,15 @@ export class CreatePostUseCase {
             input.imageKey ?? null,
             new Date()
         );
-        await this.repo.create(post);
-        return post;
+        const id = await this.repo.create(post);
+        return new Posts(
+            id,
+            post.storeName,
+            post.userId,
+            post.score,
+            post.comment,
+            post.imageKey,
+            post.createdAt
+        );
     }
 }

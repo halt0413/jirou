@@ -13,21 +13,21 @@ export class UpdatePostUseCase {
         input: UpdatePostInput
     ): Promise<number> {
 
-        const existing = await this.repo.findByPostId(postId);
+    const existing = await this.repo.findByPostId(postId);
 
-        if (!existing) {
-            throw new Error("postが存在しない")
-        }
+    if (!existing) {
+        throw new Error("postが存在しない")
+    }
 
-        const updatedPost = new Posts(
-            existing.id,
-            existing.storeName,
-            existing.userId,
-            input.score ?? existing.score,
-            input.comment ?? existing.comment,
-            existing.imageKey,
-            existing.createdAt
-        );
+    const updatedPost = new Posts(
+        existing.id,
+        existing.storeName,
+        existing.userId,
+        input.score ?? existing.score,
+        input.comment ?? existing.comment,
+        existing.imageKey,
+        existing.createdAt
+    );
 
         return await this.repo.update(updatedPost);
     }
