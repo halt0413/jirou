@@ -1,5 +1,5 @@
 export type Env = {
     DB: D1Database
-    BUCkET: R2Bucket
+    BUCKET: R2Bucket
     JWT_SECRET: string;
 }
