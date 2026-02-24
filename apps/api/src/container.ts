@@ -3,6 +3,8 @@ import { Env } from "./types/env";
 import { drizzle } from "drizzle-orm/d1";
 import * as schema from "./infra/db/schema";
 
+import { R2StorageRepository } from "./infra/repository/r2Storage.repository";
+
 import { D1PostsRepository } from "./infra/repository/d1Posts.repository";
 import { CreatePostUseCase } from "./application/posts/createPost.usecase";
 import { FindPostsByUserIdUseCase } from "./application/posts/findPostsByUserId.usecase";
@@ -15,9 +17,12 @@ import { HonoTokenProvider } from "./infra/auth/hono_token_provider";
 
 import { RegisterUseCase } from "./application/users/register_user.usecase";
 import { LoginUserUseCase } from "./application/users/login_user.usecase";
+import { UploadImagesUseCase } from "./application/posts/uploadImage.usecase";
 
 export const createContainer = (env: Env) => {
   const db = drizzle(env.DB, { schema });
+
+  const storageRepository = new R2StorageRepository(env.BUCKET);
 
   // ===== Posts =====
   const postRepository = new D1PostsRepository(db);
@@ -33,6 +38,10 @@ export const createContainer = (env: Env) => {
     findPostsByUserIdUseCase: new FindPostsByUserIdUseCase(postRepository),
     findPostsByPostIdUseCase: new FindPostsByPostIdUseCase(postRepository),
     updatePostUseCase: new UpdatePostUseCase(postRepository),
+    uploadPostImageUseCase: new UploadImagesUseCase(
+      postRepository,
+      storageRepository
+    ),
 
     // users
     registerUserUseCase: new RegisterUseCase(

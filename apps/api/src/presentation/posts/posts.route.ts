@@ -59,4 +59,29 @@ postsRoute.put("/:postId", zValidator("json", updatePostSchema), async (c) => {
     }
 })
 
+postsRoute.post("/:postId/image", async (c) => {
+    const postId = Number(c.req.param("postId"));
+
+    const formData = await c.req.formData();
+    const image = formData.get("image") as File | null;
+
+    if (!image || typeof image === "string") {
+        return c.json({ error: "画像が必要です" }, 400);
+    }
+
+    const file = {
+    buffer: await image.arrayBuffer(),
+    contentType: image.type,
+    };
+
+    const { uploadPostImageUseCase } = createContainer(c.env);
+
+    try {
+        await uploadPostImageUseCase.execute(postId, file);
+        return c.json({ message: "アップロード成功" });
+    } catch (e) {
+        return c.json({ error: "失敗" }, 400);
+    }
+});
+
 export default postsRoute;
