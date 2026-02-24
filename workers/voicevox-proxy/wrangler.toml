@@ -1,0 +1,4 @@
+name = "voicevox-proxy"
+main = "src/index.js"
+compatibility_date = "2026-02-23"
+workers_dev = true

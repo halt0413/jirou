@@ -16,5 +16,5 @@ export const posts = sqliteTable("posts",{
     score: integer("score").notNull(),
     comment: text("comment"),
     imageKey: text("image_key"),
-    createdAt: text("created_at").default(sql`CURRENT_TIMESTAMP`),
+    createdAt: text("created_at").default(sql`CURRENT_TIMESTAMP`).notNull(),
 })
