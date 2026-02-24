@@ -13,7 +13,7 @@ export class CreatePostUseCase {
             userId,
             input.score,
             input.comment ?? null,
-            input.imageKey ?? null,
+            null,
             new Date()
         );
         const id = await this.repo.create(post);

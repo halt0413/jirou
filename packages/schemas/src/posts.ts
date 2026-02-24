@@ -4,7 +4,7 @@ export const CreatePostSchema = z.object({
     storeName: z.string(),
     score: z.number().min(1).max(5),
     comment: z.string().nullable().optional(),
-    imageKey: z.string(),
+    imageKey: z.string().optional(),
 });
 
 export const userIdGetPostsSchema = z.object({
