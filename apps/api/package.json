@@ -6,13 +6,15 @@
     "deploy": "wrangler deploy"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20260207.0",
+    "@cloudflare/workers-types": "^4.20260228.0",
     "drizzle-kit": "^0.31.9",
     "wrangler": "^4.66.0"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.7.6",
-    "hono": "^4.11.9",
+    "better-sqlite3": "^12.6.2",
+    "drizzle-orm": "^0.45.1",
+    "hono": "^4.12.1",
     "zod": "^4.3.6"
   }
 }
