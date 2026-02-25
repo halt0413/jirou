@@ -1,6 +1,15 @@
 name: ci-backend
 
 on:
+  push:
+    branches: [dev, main]
+    paths:
+      - "apps/api/**"
+      - "packages/**"
+      - "package.json"
+      - "bun.lock"
+      - "tsconfig.base.json"
+      - "turbo.json"
   pull_request:
     branches: [dev, main]
     paths:
