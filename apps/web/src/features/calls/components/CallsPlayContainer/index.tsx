@@ -5,7 +5,7 @@ import { useState } from "react";
 import { CallSelect } from "../CallSelect";
 import { TicketCard } from "../TicketCard";
 import { PlayButton } from "../PlayButton";
-import { Button } from "@/features/calls/components/Button";
+import { Button } from "@/components/Button";
 
 export const CallsPlayPage = () => {
   const [selectedId, setSelectedId] = useState("1");
