@@ -5,22 +5,27 @@ on:
     branches: [dev]
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
 
 jobs:
   open-release-pr:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Create or update PR dev -> main
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           base: main
-          branch: dev
+          branch: release/dev-to-main
           title: "release: dev → main"
           body: |
-            devの変更をmainに反映するためのリリースPRです
-            CIが通ったら手動でマージしてください
+            dev の変更を main に反映するためのリリースPRです。
+            CI が通ったら手動でマージしてください。
           labels: release
           draft: false
