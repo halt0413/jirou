@@ -31,6 +31,8 @@ export default {
       return new Response("Invalid ORIGIN", { status: 500, headers: corsHeaders });
     }
 
+    console.log("voicevox target", targetUrl.toString());
+
     const forwardHeaders = new Headers();
     const contentType = request.headers.get("Content-Type");
     const authorization = request.headers.get("Authorization");
@@ -50,6 +52,18 @@ export default {
       headers: forwardHeaders,
       body: hasBody ? request.body : null,
     });
+
+    try {
+      const preview = await resp.clone().text();
+      console.log(
+        "voicevox resp",
+        resp.status,
+        resp.headers.get("server"),
+        preview.slice(0, 120),
+      );
+    } catch (err) {
+      console.log("voicevox resp preview failed", String(err));
+    }
 
     const headers = new Headers(resp.headers);
     Object.entries(corsHeaders).forEach(([k, v]) => headers.set(k, v));
