@@ -14,14 +14,41 @@ export default {
     }
 
     const url = new URL(request.url);
+    if (!url.pathname.startsWith("/voicevox")) {
+      return new Response("Not Found", { status: 404, headers: corsHeaders });
+    }
+
+    if (!ORIGIN) {
+      return new Response("Missing ORIGIN", { status: 500, headers: corsHeaders });
+    }
+
     const path = url.pathname.replace(/^\/voicevox/, "") || "/";
-    const targetUrl = new URL(ORIGIN + path);
-    targetUrl.search = url.search;
+    let targetUrl;
+    try {
+      targetUrl = new URL(path, ORIGIN);
+      targetUrl.search = url.search;
+    } catch {
+      return new Response("Invalid ORIGIN", { status: 500, headers: corsHeaders });
+    }
+
+    const forwardHeaders = new Headers();
+    const contentType = request.headers.get("Content-Type");
+    const authorization = request.headers.get("Authorization");
+    const accept = request.headers.get("Accept");
+    const acceptLanguage = request.headers.get("Accept-Language");
+
+    if (contentType) forwardHeaders.set("Content-Type", contentType);
+    if (authorization) forwardHeaders.set("Authorization", authorization);
+    if (accept) forwardHeaders.set("Accept", accept);
+    if (acceptLanguage) forwardHeaders.set("Accept-Language", acceptLanguage);
+
+    const method = request.method.toUpperCase();
+    const hasBody = method !== "GET" && method !== "HEAD";
 
     const resp = await fetch(targetUrl.toString(), {
-      method: request.method,
-      headers: request.headers,
-      body: request.body,
+      method,
+      headers: forwardHeaders,
+      body: hasBody ? request.body : null,
     });
 
     const headers = new Headers(resp.headers);
