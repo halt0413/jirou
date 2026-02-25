@@ -1,2 +1,1 @@
 # jirou
-# frontend
