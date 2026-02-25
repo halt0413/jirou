@@ -63,16 +63,26 @@ jobs:
       - name: Build (Next on Pages)
         run: bunx --yes @cloudflare/next-on-pages@latest
 
-      - name: Deploy dev Pages
+      - name: Deploy Pages (dev)
         if: github.ref == 'refs/heads/dev'
-        run: bunx --yes wrangler@3 pages deploy .vercel/output/static --project-name ${{ secrets.CLOUDFLARE_PAGES_PROJECT_NAME_DEV }} --branch dev
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN_PAGES }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_PROJECT_NAME: ${{ secrets.CLOUDFLARE_PAGES_PROJECT_NAME }}
+        run: |
+          test -n "$CLOUDFLARE_PROJECT_NAME" || (echo "Missing secret: CLOUDFLARE_PAGES_PROJECT_NAME" && exit 1)
+          bunx --yes wrangler@3 pages deploy .vercel/output/static \
+            --project-name "$CLOUDFLARE_PROJECT_NAME" \
+            --branch dev
 
-      - name: Deploy prod Pages
+      - name: Deploy Pages (prod)
         if: github.ref == 'refs/heads/main'
-        run: bunx --yes wrangler@3 pages deploy .vercel/output/static --project-name ${{ secrets.CLOUDFLARE_PAGES_PROJECT_NAME }} --branch main
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN_PAGES }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_PROJECT_NAME: ${{ secrets.CLOUDFLARE_PAGES_PROJECT_NAME }}
+        run: |
+          test -n "$CLOUDFLARE_PROJECT_NAME" || (echo "Missing secret: CLOUDFLARE_PAGES_PROJECT_NAME" && exit 1)
+          bunx --yes wrangler@3 pages deploy .vercel/output/static \
+            --project-name "$CLOUDFLARE_PROJECT_NAME" \
+            --branch main
