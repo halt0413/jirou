@@ -22,6 +22,7 @@ on:
 
 jobs:
   backend-check:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -37,3 +38,29 @@ jobs:
         run: bun run lint 
       - name: Test
         run: bun test || echo "No tests yet"
+
+  backend-deploy:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/api
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: "1.3.9"
+      - name: Install
+        run: bun install --frozen-lockfile
+      - name: Deploy dev API
+        if: github.ref == 'refs/heads/dev'
+        run: bun run deploy -- --name jirou-api-dev
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      - name: Deploy prod API
+        if: github.ref == 'refs/heads/main'
+        run: bun run deploy -- --name jirou
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
