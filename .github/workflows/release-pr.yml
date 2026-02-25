@@ -12,12 +12,19 @@ jobs:
   open-release-pr:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
+          ref: dev
           fetch-depth: 0
 
-      - name: Create or update PR dev -> main
+      - name: Fetch main
+        run: |
+          git fetch origin main --depth=1
+          echo "HEAD(dev) = $(git rev-parse HEAD)"
+          echo "origin/main = $(git rev-parse origin/main)"
+          echo "diff count main...dev = $(git rev-list --left-right --count origin/main...HEAD)"
+
+      - id: cpr
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -28,4 +35,9 @@ jobs:
             dev の変更を main に反映するためのリリースPRです。
             CI が通ったら手動でマージしてください。
           labels: release
-          draft: false
+
+      - name: Print outputs
+        run: |
+          echo "operation=${{ steps.cpr.outputs.pull-request-operation }}"
+          echo "number=${{ steps.cpr.outputs.pull-request-number }}"
+          echo "url=${{ steps.cpr.outputs.pull-request-url }}"
