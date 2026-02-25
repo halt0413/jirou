@@ -1,13 +1,18 @@
 {
   "name": "api",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy"
+    "deploy": "wrangler deploy",
+    "lint": "eslint ."
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260228.0",
+    "@eslint/js": "^10.0.1",
     "drizzle-kit": "^0.31.9",
+    "eslint": "^10.0.2",
+    "typescript-eslint": "^8.56.1",
     "wrangler": "^4.66.0"
   },
   "dependencies": {
