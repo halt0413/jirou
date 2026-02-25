@@ -11,4 +11,8 @@ export class R2StorageRepository implements FileStorageRepository {
         });
         return key;
     }
+
+    async delete(key: string): Promise<void> {
+        await this.bucket.delete(key);
+    }
 }

@@ -15,6 +15,10 @@ export class UploadImagesUseCase {
             throw new Error("画像のみアップロード可能");
         }
 
+        if (post.imageKey) {
+            await this.storage.delete(post.imageKey);
+        }
+
         const extension = file.contentType.split("/")[1] ?? "jpg";
         const key = `posts/${postId}/${crypto.randomUUID()}.${extension}`;
 
