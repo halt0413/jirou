@@ -5,33 +5,38 @@ on:
     branches: [dev]
 
 permissions:
-  contents: write
+  contents: read
   pull-requests: write
 
 jobs:
   open-release-pr:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout dev
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          ref: dev
           fetch-depth: 0
 
-      - name: Fetch main
-        run: git fetch origin main --depth=1
+      - name: Create PR dev -> main if not exists
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 既に dev->main のPRがあるなら終了
+          if gh pr list --base main --head dev --state open --json number --jq 'length > 0' | grep -q true; then
+            echo "PR dev -> main already exists."
+            exit 0
+          fi
 
-      - name: Create or update PR dev -> main
-        uses: peter-evans/create-pull-request@v6
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          base: main
-          branch: release/dev-to-main
-          title: "release: dev → main"
-          body: |
-            dev の変更を main に反映するためのリリースPRです。
-            CI が通ったら手動でマージしてください。
-          labels: release
-          draft: false
-          rebase-strategy: none
+          # 差分が無いなら終了
+          git fetch origin main dev
+          if git diff --quiet origin/main..origin/dev; then
+            echo "No diff between dev and main."
+            exit 0
+          fi
+
+          # PR作成
+          gh pr create \
+            --base main \
+            --head dev \
+            --title "release: dev → main" \
+            --body "dev の変更を main に反映するためのリリースPRです。CI が通ったら手動でマージしてください。" \
+            --label "release"
