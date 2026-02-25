@@ -16,6 +16,7 @@ postsRoute.post("/", zValidator("json", CreatePostSchema), async (c) => {
         const post = await createPostUseCase.execute(body,userId);
         return c.json(post, 201);
     } catch (error) {
+        console.log(error)
         return c.json({error: "エラー" }, 500);
     }
 })
@@ -28,6 +29,7 @@ postsRoute.get("user/:userId", zValidator("param", userIdGetPostsSchema), async 
         const posts = await findPostsByUserIdUseCase.execute(userId);
         return c.json(posts, 200);
     } catch (error) {
+        console.log(error)
         return c.json({error: "エラー" }, 500);
     }
 })
@@ -41,6 +43,7 @@ postsRoute.get("post/:postId", async (c) => {
         const post = await findPostsByPostIdUseCase.execute(postId);
         return c.json(post, 200);
     } catch (error) {
+        console.log(error)
         return c.json({ error: "Not Found" }, 404);
     }
 });
@@ -55,6 +58,7 @@ postsRoute.put("/:postId", zValidator("json", updatePostSchema), async (c) => {
         const result = await updatePostUseCase.execute(postId,input);
         return c.json({ updated: result }, 200);
     } catch (error) {
+        console.log(error)
         return c.json({ error: "Not Found" }, 404);
     }
 })
@@ -79,7 +83,8 @@ postsRoute.post("/:postId/image", async (c) => {
     try {
         await uploadPostImageUseCase.execute(postId, file);
         return c.json({ message: "アップロード成功" });
-    } catch (e) {
+    } catch (error) {
+        console.log(error)
         return c.json({ error: "失敗" }, 400);
     }
 });
