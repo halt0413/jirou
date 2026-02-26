@@ -1,0 +1,31 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.refund {
+  margin-top: 50px;
+  width: 66px;
+}
+
+.coin {
+  margin-top: 50px;
+  width: 43px;
+}
+
+.bill {
+  margin-top: 50px;
+  width: 79px;
+}
+
+.ticketIcon {
+  width: 145px;
+}

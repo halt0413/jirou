@@ -1,0 +1,29 @@
+.btn {
+  position: relative;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.05s ease;
+}
+
+.bg {
+  width: 65px;
+  display: block;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
+}
+
+.label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+  font-weight: bold;
+  font-size: 15px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.active {
+  outline: 3px solid #ff3b30;
+}
