@@ -8,7 +8,7 @@ export class HonoTokenProvider implements TokenProvider {
     return await sign(
       {
         sub: userId,
-        exp: Math.floor(Date.now() / 1000) + 60 * 60, // 1時間
+        exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7, // 1週間
       },
       this.secret
     );

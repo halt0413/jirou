@@ -8,8 +8,11 @@ const postsRoute = new Hono<{Bindings:Env}>();
 
 postsRoute.post("/", zValidator("json", CreatePostSchema), async (c) => {
     const body = c.req.valid("json")
-    //後で差し替え
-    const userId = "hsmt"
+    // //後で差し替え
+    // const userId = "hsmt"
+
+    const payload = c.get("jwtPayload");
+    const userId = payload.sub;
     const { createPostUseCase } = createContainer(c.env);
     
     try {
