@@ -1,0 +1,48 @@
+.page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f2b64b 0%, #f1b24a 100%);
+  display: flex;
+  justify-content: center;
+  padding-top: 64px;
+}
+
+.container {
+  width: min(380px, 100%);
+  padding: 48px 24px 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 18px;
+}
+
+.illustrationWrap {
+  display: flex;
+  justify-content: center;
+  margin: 8px 0 18px;
+}
+
+.illustration {
+  width: min(260px, 70vw);
+  height: 180px;
+  border-radius: 16px;
+  border: 3px dashed rgba(122, 74, 26, 0.4);
+  background: rgba(255, 245, 223, 0.6);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: rgba(122, 74, 26, 0.55);
+}
+
+
+.link {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 800;
+  color: #7a4a1a;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
