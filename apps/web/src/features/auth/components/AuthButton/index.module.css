@@ -1,0 +1,30 @@
+.button {
+  margin-top: 32px;
+  height: 58px;
+  border: none;
+  border-radius: 999px;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #fff;
+  background: #ef9046;
+  box-shadow: none;
+  cursor: pointer;
+  width: 84%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.button:active {
+  transform: translateY(1px);
+  box-shadow: 0 6px 12px rgba(96, 36, 0, 0.2);
+}
+
+.button:focus-visible {
+  outline: none;
+}
