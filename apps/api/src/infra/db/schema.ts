@@ -18,3 +18,13 @@ export const posts = sqliteTable("posts",{
     imageKey: text("image_key"),
     createdAt: text("created_at").default(sql`CURRENT_TIMESTAMP`).notNull(),
 })
+
+export const calls = sqliteTable("calls", {
+  id: integer("id").primaryKey({autoIncrement: true}),
+  userId: text("user_id").notNull(),
+  title: text("title"),
+  ninniku: integer("ninniku"),
+  yasai: integer("yasai"),
+  abura: integer("abura"),
+  karame: integer("karame"),
+})

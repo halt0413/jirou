@@ -18,6 +18,8 @@ import { HonoTokenProvider } from "./infra/auth/hono_token_provider";
 import { RegisterUseCase } from "./application/users/register_user.usecase";
 import { LoginUserUseCase } from "./application/users/login_user.usecase";
 import { UploadImagesUseCase } from "./application/posts/uploadImage.usecase";
+import { D1CallsRepository } from "./infra/repository/d1Calls.repository";
+import { CreateCallUseCase } from "./application/calls/createCall.usecase";
 
 export const createContainer = (env: Env) => {
   const db = drizzle(env.DB, { schema });
@@ -26,6 +28,8 @@ export const createContainer = (env: Env) => {
 
   // ===== Posts =====
   const postRepository = new D1PostsRepository(db);
+  // Calls
+  const callsRepository = new D1CallsRepository(db);
 
   // ===== Users =====
   const userRepository = new DrizzleUserRepository(db);
@@ -53,5 +57,8 @@ export const createContainer = (env: Env) => {
       passwordHasher,
       tokenProvider
     ),
+
+    // calls
+    createCallUseCase: new CreateCallUseCase(callsRepository)
   };
 };
