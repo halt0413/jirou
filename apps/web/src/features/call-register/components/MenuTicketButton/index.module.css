@@ -1,0 +1,44 @@
+.btn {
+  position: relative;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  display: block;
+}
+
+.bg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.iconBox {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 72%;
+  display: grid;
+  place-items: center;
+}
+
+.icon {
+  width: 75px;
+  display: block;
+}
+
+.label {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: 900;
+  font-size: 22px;
+  white-space: nowrap;
+}
+
+.active {
+  outline: 3px solid #ff3b30;
+  outline-offset: 1px;
+}
