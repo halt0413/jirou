@@ -4,3 +4,15 @@ export const setAccessTokenCookie = (token: string) => {
     token
   )}; Path=/; SameSite=Lax${secure}`;
 };
+
+export const getAccessTokenCookie = () => {
+  if (typeof document === "undefined") {
+    return null;
+  }
+  const value = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("accessToken="))
+    ?.split("=")[1];
+
+  return value ? decodeURIComponent(value) : null;
+};

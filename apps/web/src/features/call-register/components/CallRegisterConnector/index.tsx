@@ -5,12 +5,13 @@ import { CallRegisterPage } from "../CallRegisterContainer";
 
 export const CallRegisterConnector = () => {
   const vm = useCallRegister();
-  console.log("callLevels CONECTER", vm.CALL_LEVELS);
   return (
     <CallRegisterPage
       menu={vm.menu}
       onMenuChange={vm.setMenu}
-      callLevels={vm.CALL_LEVELS}
+      ninnikuLevels={vm.NINNIKU_LEVELS}
+      yasaiLevels={vm.YASAI_LEVELS}
+      aburaLevels={vm.ABURA_LEVELS}
       karameLevels={vm.KARAME_LEVELS}
       ninniku={vm.ninniku}
       yasai={vm.yasai}
