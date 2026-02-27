@@ -7,10 +7,6 @@ export const CreatePostSchema = z.object({
     imageKey: z.string().optional(),
 });
 
-export const userIdGetPostsSchema = z.object({
-    userId: z.string()
-})
-
 export const updatePostSchema = z.object({
     score: z.number().min(1).max(5).optional(),
     comment: z.string().nullable().optional(),

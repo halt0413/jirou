@@ -29,6 +29,6 @@ export class UpdatePostUseCase {
         existing.createdAt
     );
 
-        return await this.repo.update(updatedPost);
+    return await this.repo.update(updatedPost);
     }
 }
