@@ -10,7 +10,7 @@ const nextConfig = {
     root: path.resolve(__dirname, "../.."), // monorepo root
 
     rules: {
-      "*svg": {
+      "*.svg": {
         loaders: ["@svgr/webpack"],
         as: "*.js",
       },
