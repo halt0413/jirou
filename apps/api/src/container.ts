@@ -20,7 +20,8 @@ import { LoginUserUseCase } from "./application/users/login_user.usecase";
 import { UploadImagesUseCase } from "./application/posts/uploadImage.usecase";
 import { D1CallsRepository } from "./infra/repository/d1Calls.repository";
 import { CreateCallUseCase } from "./application/calls/createCall.usecase";
-import { FindCallsByUserId } from "./application/calls/findCallsByUserId.usecase";
+import { FindCallsByUserIdUseCase } from "./application/calls/findCallsByUserId.usecase";
+import { DeleteCallUseCase } from "./application/calls/deleteCall.usecase";
 
 export const createContainer = (env: Env) => {
   const db = drizzle(env.DB, { schema });
@@ -61,6 +62,7 @@ export const createContainer = (env: Env) => {
 
     // calls
     createCallUseCase: new CreateCallUseCase(callsRepository),
-    findCallsByUserIdUseCase: new FindCallsByUserId(callsRepository),
+    findCallsByUserIdUseCase: new FindCallsByUserIdUseCase(callsRepository),
+    deleteCallUseCase: new DeleteCallUseCase(callsRepository) 
   };
 };

@@ -2,7 +2,7 @@ import { CallsRepository } from "../../domain/calls/calls.repository";
 import { DrizzleD1Database } from "drizzle-orm/d1";
 import { Calls } from "../../domain/calls/calls.entity";
 import * as schema from "../db/schema";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 
 export class D1CallsRepository implements CallsRepository {
     constructor(private readonly db: DrizzleD1Database<typeof schema>) {}
@@ -25,8 +25,8 @@ export class D1CallsRepository implements CallsRepository {
         return  Number(insertedId)
     }
 
-    async delete(call: Calls): Promise<void> {
-        
+    async delete(callId: number, userId: string): Promise<void> {
+        await this.db.delete(schema.calls).where(and(eq(schema.calls.id, callId), eq(schema.calls.userId, userId)))
     }
 
     async findByUserId(userId: string): Promise<Calls[]> {

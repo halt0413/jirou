@@ -24,7 +24,7 @@ callsRoute.post("/", zValidator("json", CreateCallSchema), async (c) => {
     }
 })
 
-callsRoute.get("user/:userId", zValidator("param", userIdGetPostsSchema), async (c) => {
+callsRoute.get("/:userId", zValidator("param", userIdGetPostsSchema), async (c) => {
     const { userId } = c.req.valid("param");
     const { findCallsByUserIdUseCase } = createContainer(c.env);
 
@@ -36,6 +36,23 @@ callsRoute.get("user/:userId", zValidator("param", userIdGetPostsSchema), async 
         return c.json({error: "エラー" }, 500);
     }
 })
+
+callsRoute.delete("/:callId", async (c) => {
+    const callId = Number(c.req.param("callId"));
+
+    const payload = c.get("jwtPayload");
+    const userId = payload.sub;
+
+    const { deleteCallUseCase } = createContainer(c.env);
+
+    try {
+        await deleteCallUseCase.execute(userId, callId);
+        return c.json({ message: "Deleted" }, 200);
+    } catch (error) {
+        console.log(error);
+        return c.json({ error: "エラー" }, 500);
+    }
+});
 
 
 
