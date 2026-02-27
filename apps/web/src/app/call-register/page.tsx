@@ -1,5 +1,5 @@
-import { CallRegisterPage } from "@/features/call-register";
+import { CallRegisterConnector } from "@/features/call-register/components/CallRegisterConnector";
 
 export default function Page() {
-  return <CallRegisterPage />;
+  return <CallRegisterConnector />;
 }

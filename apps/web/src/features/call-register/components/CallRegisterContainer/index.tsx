@@ -1,51 +1,62 @@
 "use client";
 
 import styles from "./index.module.css";
-import { useMemo, useState } from "react";
 import { TicketHeader } from "../TicketHeader";
 import { MenuCardPicker } from "../MenuCardPicker";
 import { OptionGroup } from "../OptionGroup";
 import { TicketingButton } from "../TicketingButton";
+import type { CallLevel, KarameLevel, MenuType } from "../../hooks/useCallRegister";
 
-const CALL_LEVELS = ["抜き", "少なめ", "普通", "マシ", "マシマシ"] as const;
-type CallLevel = (typeof CALL_LEVELS)[number];
+type Props = {
+  menu: MenuType;
+  onMenuChange: (v: MenuType) => void;
 
-const KARAME_LEVELS = ["なし", "カラメ", "カラカラ"] as const;
-type KarameLevel = (typeof KARAME_LEVELS)[number];
+  callLevels: readonly CallLevel[];
+  karameLevels: readonly KarameLevel[];
 
-export const CallRegisterPage = () => {
-  const [menu, setMenu] = useState<"all-mashi" | "all-mashimashi">("all-mashi");
-  const [ninniku, setNinniku] = useState<CallLevel>("普通");
-  const [yasai, setYasai] = useState<CallLevel>("普通");
-  const [abura, setAbura] = useState<CallLevel>("普通");
-  const [karame, setKarame] = useState<KarameLevel>("なし");
+  ninniku: CallLevel;
+  yasai: CallLevel;
+  abura: CallLevel;
+  karame: KarameLevel;
 
-  const summary = useMemo(() => {
-    const lines = [
-      `ニンニク ${ninniku}`,
-      `ヤサイ ${yasai}`,
-      `アブラ ${abura}`,
-      `カラメ ${karame}`,
-    ];
-    const title = menu === "all-mashi" ? "全マシ" : "全マシマシ";
-    return { title, lines };
-  }, [menu, ninniku, yasai, abura, karame]);
+  onNinnikuChange: (v: CallLevel) => void;
+  onYasaiChange: (v: CallLevel) => void;
+  onAburaChange: (v: CallLevel) => void;
+  onKarameChange: (v: KarameLevel) => void;
 
+  onIssue: () => void;
+};
+
+export const CallRegisterPage = ({
+  menu,
+  onMenuChange,
+  callLevels,
+  karameLevels,
+  ninniku,
+  yasai,
+  abura,
+  karame,
+  onNinnikuChange,
+  onYasaiChange,
+  onAburaChange,
+  onKarameChange,
+  onIssue,
+}: Props) => {
+  console.log("callLevels PAGE", callLevels);
   return (
     <div className={styles.page}>
       <TicketHeader />
 
       <div className={styles.content}>
-        <MenuCardPicker value={menu} onChange={setMenu} />
+        <MenuCardPicker value={menu} onChange={onMenuChange} />
 
-        <OptionGroup title="ニンニク" options={CALL_LEVELS} value={ninniku} onChange={setNinniku} />
-        <OptionGroup title="ヤサイ" options={CALL_LEVELS} value={yasai} onChange={setYasai} />
-        <OptionGroup title="アブラ" options={CALL_LEVELS} value={abura} onChange={setAbura} />
-
-        <OptionGroup title="カラメ" options={KARAME_LEVELS} value={karame} onChange={setKarame} />
+        <OptionGroup title="ニンニク" options={callLevels} value={ninniku} onChange={onNinnikuChange} />
+        <OptionGroup title="ヤサイ" options={callLevels} value={yasai} onChange={onYasaiChange} />
+        <OptionGroup title="アブラ" options={callLevels} value={abura} onChange={onAburaChange} />
+        <OptionGroup title="カラメ" options={karameLevels} value={karame} onChange={onKarameChange} />
 
         <div className={styles.issueArea}>
-          <TicketingButton onClick={() => console.log("issue", summary)} />
+          <TicketingButton onClick={onIssue} />
         </div>
       </div>
     </div>

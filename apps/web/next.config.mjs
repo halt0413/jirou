@@ -8,6 +8,13 @@ const __dirname = path.dirname(__filename);
 const nextConfig = {
   turbopack: {
     root: path.resolve(__dirname, "../.."), // monorepo root
+
+    rules: {
+      "*svg": {
+        loaders: ["@svgr/webpack"],
+        as: "*.js",
+      },
+    },
   },
 };
 
