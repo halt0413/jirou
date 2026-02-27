@@ -10,8 +10,11 @@ const callsRoute = new Hono<{Bindings:Env}>();
 
 callsRoute.post("/", zValidator("json", CreateCallSchema), async (c) => {
     const body = c.req.valid("json")
-    //後で差し替え
-    const userId = "bc6b45f0-51fa-4a18-9eec-17fabc4fa6f0"
+    // //後で差し替え
+    // const userId = "bc6b45f0-51fa-4a18-9eec-17fabc4fa6f0"
+
+    const payload = c.get("jwtPayload");
+    const userId = payload.sub;
     const { createCallUseCase } = createContainer(c.env);
     
     try {
