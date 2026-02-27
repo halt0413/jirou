@@ -45,7 +45,7 @@ export const useCallRegister = () => {
   const [ninniku, setNinniku] = useState<NinnikuLevel>("普通");
   const [yasai, setYasai] = useState<YasaiLevel>("普通");
   const [abura, setAbura] = useState<AburaLevel>("普通");
-  const [karame, setKarame] = useState<KarameLevel>("なし");
+  const [karame, setKarame] = useState<KarameLevel>("普通");
 
   const summary: CallSummary = useMemo(() => {
     const lines = [
