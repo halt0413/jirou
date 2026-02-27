@@ -7,8 +7,10 @@ import styles from "./index.module.css";
 import type { LoginFormValues } from "@/domain/auth/login";
 import { loginUser } from "@/application/auth/loginUser";
 import { loginResolver } from "@/features/auth/validation/loginFormResolver";
+import { useRedirect } from "@/hooks/useRedirect";
 
 export const LoginForm = () => {
+  const redirect = useRedirect();
   const {
     register,
     handleSubmit,
@@ -27,8 +29,8 @@ export const LoginForm = () => {
   const onSubmit = async (values: LoginFormValues) => {
     try {
       setSubmitError(null);
-      const result = await loginUser(values);
-      console.log("login", result);
+      await loginUser(values);
+      redirect("/call-play");
     } catch (error) {
       setSubmitError(
         error instanceof Error ? error.message : "ログインに失敗しました"
