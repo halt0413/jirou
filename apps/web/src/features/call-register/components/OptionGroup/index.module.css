@@ -13,3 +13,7 @@
   flex-wrap: wrap;
   gap: 10px;
 }
+
+.disabled {
+  opacity: 0.6;
+}
