@@ -5,8 +5,8 @@ import { MenuTicketButton } from "../MenuTicketButton";
 type Value = "all-mashi" | "all-mashimashi";
 
 type Props = {
-  value: Value;
-  onChange: (v: Value) => void;
+  value: Value | null;
+  onChange: (v: Value | null) => void;
 };
 
 const ITEMS: { value: Value; label: string }[] = [
@@ -22,7 +22,9 @@ export const MenuCardPicker = ({ value, onChange }: Props) => {
           key={item.value}
           active={value === item.value}
           label={item.label}
-          onClick={() => onChange(item.value)}
+          onClick={() =>
+            onChange(value === item.value ? null : item.value)
+          }
         />
       ))}
     </section>

@@ -5,23 +5,31 @@ import { TicketHeader } from "../TicketHeader";
 import { MenuCardPicker } from "../MenuCardPicker";
 import { OptionGroup } from "../OptionGroup";
 import { TicketingButton } from "../TicketingButton";
-import type { CallLevel, KarameLevel, MenuType } from "../../hooks/useCallRegister";
+import type {
+  AburaLevel,
+  KarameLevel,
+  MenuType,
+  NinnikuLevel,
+  YasaiLevel,
+} from "../../hooks/useCallRegister";
 
 type Props = {
-  menu: MenuType;
-  onMenuChange: (v: MenuType) => void;
+  menu: MenuType | null;
+  onMenuChange: (v: MenuType | null) => void;
 
-  callLevels: readonly CallLevel[];
+  ninnikuLevels: readonly NinnikuLevel[];
+  yasaiLevels: readonly YasaiLevel[];
+  aburaLevels: readonly AburaLevel[];
   karameLevels: readonly KarameLevel[];
 
-  ninniku: CallLevel;
-  yasai: CallLevel;
-  abura: CallLevel;
+  ninniku: NinnikuLevel;
+  yasai: YasaiLevel;
+  abura: AburaLevel;
   karame: KarameLevel;
 
-  onNinnikuChange: (v: CallLevel) => void;
-  onYasaiChange: (v: CallLevel) => void;
-  onAburaChange: (v: CallLevel) => void;
+  onNinnikuChange: (v: NinnikuLevel) => void;
+  onYasaiChange: (v: YasaiLevel) => void;
+  onAburaChange: (v: AburaLevel) => void;
   onKarameChange: (v: KarameLevel) => void;
 
   onIssue: () => void;
@@ -30,7 +38,9 @@ type Props = {
 export const CallRegisterPage = ({
   menu,
   onMenuChange,
-  callLevels,
+  ninnikuLevels,
+  yasaiLevels,
+  aburaLevels,
   karameLevels,
   ninniku,
   yasai,
@@ -42,7 +52,7 @@ export const CallRegisterPage = ({
   onKarameChange,
   onIssue,
 }: Props) => {
-  console.log("callLevels PAGE", callLevels);
+  const isLocked = menu === "all-mashi" || menu === "all-mashimashi";
   return (
     <div className={styles.page}>
       <TicketHeader />
@@ -50,10 +60,34 @@ export const CallRegisterPage = ({
       <div className={styles.content}>
         <MenuCardPicker value={menu} onChange={onMenuChange} />
 
-        <OptionGroup title="ニンニク" options={callLevels} value={ninniku} onChange={onNinnikuChange} />
-        <OptionGroup title="ヤサイ" options={callLevels} value={yasai} onChange={onYasaiChange} />
-        <OptionGroup title="アブラ" options={callLevels} value={abura} onChange={onAburaChange} />
-        <OptionGroup title="カラメ" options={karameLevels} value={karame} onChange={onKarameChange} />
+        <OptionGroup
+          title="ニンニク"
+          options={ninnikuLevels}
+          value={ninniku}
+          onChange={onNinnikuChange}
+          disabled={isLocked}
+        />
+        <OptionGroup
+          title="ヤサイ"
+          options={yasaiLevels}
+          value={yasai}
+          onChange={onYasaiChange}
+          disabled={isLocked}
+        />
+        <OptionGroup
+          title="アブラ"
+          options={aburaLevels}
+          value={abura}
+          onChange={onAburaChange}
+          disabled={isLocked}
+        />
+        <OptionGroup
+          title="カラメ"
+          options={karameLevels}
+          value={karame}
+          onChange={onKarameChange}
+          disabled={isLocked}
+        />
 
         <div className={styles.issueArea}>
           <TicketingButton onClick={onIssue} />
