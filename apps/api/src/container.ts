@@ -17,6 +17,8 @@ import { HonoTokenProvider } from "./infra/auth/hono_token_provider";
 
 import { RegisterUseCase } from "./application/users/register_user.usecase";
 import { LoginUserUseCase } from "./application/users/login_user.usecase";
+import { UpdateProfileUseCase } from "./application/users/update_user.usecase";
+
 import { UploadImagesUseCase } from "./application/posts/uploadImage.usecase";
 import { D1CallsRepository } from "./infra/repository/d1Calls.repository";
 import { CreateCallUseCase } from "./application/calls/createCall.usecase";
@@ -63,6 +65,9 @@ export const createContainer = (env: Env) => {
     // calls
     createCallUseCase: new CreateCallUseCase(callsRepository),
     findCallsByUserIdUseCase: new FindCallsByUserIdUseCase(callsRepository),
-    deleteCallUseCase: new DeleteCallUseCase(callsRepository) 
+    deleteCallUseCase: new DeleteCallUseCase(callsRepository) ,
+
+    // updates
+    updateProfileUseCase: new UpdateProfileUseCase(userRepository)
   };
 };

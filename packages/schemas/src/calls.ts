@@ -1,11 +1,14 @@
 import { z } from "zod";
 
 export const CreateCallSchema = z.object({
-    title: z.string().optional(),
-    ninniku: z.number().min(0).max(3).optional(),
-    yasai: z.number().min(0).max(3).optional(),
-    abura: z.number().min(0).max(3).optional(),
-    karame: z.number().min(1).max(3).optional(),
+    title: z.string().nullable().optional(),
+    ninniku: z.number().min(0).max(4).nullable().optional(),
+    yasai: z.number().min(0).max(2).nullable().optional(),
+    abura: z.number().min(0).max(2).nullable().optional(),
+    karame: z.number().min(1).max(2).nullable().optional(),
+    masi: z.number().min(0).max(1).nullable().optional(),
+    masimasi: z.number().min(0).max(1).nullable().optional(),
+
 });
 
 export type CreateCallInput = z.infer<typeof CreateCallSchema>;

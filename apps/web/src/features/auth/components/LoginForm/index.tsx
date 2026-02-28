@@ -1,33 +1,16 @@
 "use client";
 
-import type { FieldErrors, Resolver } from "react-hook-form";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { AuthButton } from "@/features/auth/components/AuthButton";
 import styles from "./index.module.css";
-import { loginSchema, type LoginFormValues } from "../../types";
+import type { LoginFormValues } from "@/domain/auth/login";
+import { loginUser } from "@/application/auth/loginUser";
+import { loginResolver } from "@/features/auth/validation/loginFormResolver";
+import { useRedirect } from "@/hooks/useRedirect";
 
 export const LoginForm = () => {
-  const resolver: Resolver<LoginFormValues> = async (values) => {
-    const result = loginSchema.safeParse(values);
-    if (result.success) {
-      return { values: result.data, errors: {} };
-    }
-
-    const errors: FieldErrors<LoginFormValues> = {};
-    for (const issue of result.error.issues) {
-      const field = issue.path[0];
-      if (!field || errors[field as keyof LoginFormValues]) {
-        continue;
-      }
-      errors[field as keyof LoginFormValues] = {
-        type: issue.code,
-        message: issue.message,
-      };
-    }
-
-    return { values: {}, errors };
-  };
-
+  const redirect = useRedirect();
   const {
     register,
     handleSubmit,
@@ -38,11 +21,21 @@ export const LoginForm = () => {
       password: "",
     },
     mode: "onSubmit",
-    resolver,
+    resolver: loginResolver,
   });
 
-  const onSubmit = (values: LoginFormValues) => {
-    console.log("login", values);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const onSubmit = async (values: LoginFormValues) => {
+    try {
+      setSubmitError(null);
+      await loginUser(values);
+      redirect("/call-register");
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error ? error.message : "ログインに失敗しました"
+      );
+    }
   };
 
   return (
@@ -74,6 +67,8 @@ export const LoginForm = () => {
       {errors.password ? (
         <p className={styles.error}>{errors.password.message}</p>
       ) : null}
+
+      {submitError ? <p className={styles.error}>{submitError}</p> : null}
 
       <AuthButton type="submit">
         ログイン
