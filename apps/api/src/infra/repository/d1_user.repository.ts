@@ -66,28 +66,13 @@ export class DrizzleUserRepository implements UserRepository {
     };
   }
 
-  async updateProfile(
-    userId: string,
-    data: {
-      store?: string | null;
-      review?: number | null;
-    }
-  ): Promise<void> {
-    const updateData: Record<string, unknown> = {};
-
-    if (data.store !== undefined) {
-      updateData.store = data.store;
-    }
-
-    if (data.review !== undefined) {
-      updateData.review = data.review;
-    }
-
+  async updateProfile(userId: string, store: string): Promise<void> {
     await this.db
       .update(users)
-      .set(updateData)
+      .set({ store })
       .where(eq(users.id, userId));
   }
+
 
   async getProfile(userId: string): Promise<UserProfile> {
     const user = await this.db.query.users.findFirst({

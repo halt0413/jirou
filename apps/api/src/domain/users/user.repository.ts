@@ -10,13 +10,7 @@ export interface UserRepository {
     hashedPassword: string
   ): Promise<User>;
 
-  updateProfile(
-    userId: string,
-    data: {
-      store?: string | null;
-      review?: number | null;
-    }
-  ): Promise<void>;
+  updateProfile(userId: string, store: string): Promise<void>;
 
   incrementReview(userId: string): Promise<void>;
 }
