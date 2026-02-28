@@ -1,88 +1,81 @@
-// stores.route.ts
+import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import type { Env } from "../../types/env";
 import type { Store } from "../../domain/stores/store.entity";
 import { createContainer } from "../../container";
-import { authMiddleware } from "../../presentation/middlewares/authMiddleware";
+import { createStoreSchema, updateStoreSchema, deleteStoreSchema, getStoreSchema } from "@repo/schemas";
 
 export const storesRoute = new Hono<{ Bindings: Env }>();
 
-// GET /stores/:id → 取得は URL パラメータのまま（認証不要）
-storesRoute.get("/:id", async (c) => {
+storesRoute.get("/", async (c) => {
   const { getStoreUseCase } = createContainer(c.env);
-  const id = Number(c.req.param("id"));
 
-  if (isNaN(id)) {
-    return c.json({ message: "Invalid store ID" }, 400);
-  }
+  const stores: Store[] = await getStoreUseCase.getAll?.() || [];
+  return c.json(stores);
+});
+
+
+// 取得 (GET)
+storesRoute.get("/:id", zValidator("param", getStoreSchema), async (c) => {
+  const { id } = c.req.valid("param");
+  const { getStoreUseCase } = createContainer(c.env);
 
   const store: Store | null = await getStoreUseCase.execute(id);
-
-  if (!store) {
-    return c.json({ message: "Store not found" }, 404);
-  }
+  if (!store) return c.json({ message: "Store not found" }, 404);
 
   return c.json(store);
 });
 
-// PUT /stores → 更新（bodyからidを受け取り、認証必須）
-storesRoute.put("/", authMiddleware, async (c) => {
-  const { updateStoreUseCase } = createContainer(c.env);
+// 作成 (POST)
+storesRoute.post("/", zValidator("json", createStoreSchema), async (c) => {
+  const { name, lat, lng } = c.req.valid("json");
   const payload = c.get("jwtPayload");
-  const userId = payload.sub;
+  const userId = payload?.sub;
   if (!userId) return c.json({ message: "Unauthorized" }, 401);
 
-  const body = await c.req.json();
-  const id = Number(body.id);
-  if (isNaN(id)) {
-    return c.json({ message: "Invalid store ID" }, 400);
+  const { createStoreUseCase } = createContainer(c.env);
+
+  try {
+    const store = await createStoreUseCase.execute({ name, lat, lng });
+    return c.json({ message: "Store created", store }, 201);
+  } catch (err: any) {
+    if (err?.cause?.message?.includes("UNIQUE constraint failed")) {
+      return c.json({ message: "This store name already exists" }, 400);
+    }
+    return c.json({ message: "Failed to create store" }, 500);
   }
+});
 
-  const data = {
-    name: body.name,
-    lat: body.lat,
-    lng: body.lng,
-  };
+// 更新 (PUT)
+storesRoute.put("/", zValidator("json", updateStoreSchema), async (c) => {
+  const { id, name, lat, lng } = c.req.valid("json");
+  const payload = c.get("jwtPayload");
+  const userId = payload?.sub;
+  if (!userId) return c.json({ message: "Unauthorized" }, 401);
 
-  await updateStoreUseCase.execute({ id, ...data });
+  const { getStoreUseCase, updateStoreUseCase } = createContainer(c.env);
 
+  const store = await getStoreUseCase.execute(id);
+  if (!store) return c.json({ message: "Store not found" }, 404);
+
+  await updateStoreUseCase.execute({ id, name, lat, lng });
   return c.json({ message: "Store updated" });
 });
 
-// DELETE /stores → 削除（bodyからidを受け取り、認証必須）
-storesRoute.delete("/", authMiddleware, async (c) => {
-  const { deleteStoreUseCase } = createContainer(c.env);
+// 削除 (DELETE)
+storesRoute.delete("/", zValidator("json", deleteStoreSchema), async (c) => {
+  const { id } = c.req.valid("json");
   const payload = c.get("jwtPayload");
-  const userId = payload.sub;
+  const userId = payload?.sub;
   if (!userId) return c.json({ message: "Unauthorized" }, 401);
 
-  const body = await c.req.json();
-  const id = Number(body.id);
-  if (isNaN(id)) {
-    return c.json({ message: "Invalid store ID" }, 400);
-  }
+  const { getStoreUseCase, deleteStoreUseCase } = createContainer(c.env);
+
+  const store = await getStoreUseCase.execute(id);
+  if (!store) return c.json({ message: "Store not found" }, 404);
 
   await deleteStoreUseCase.execute(id);
-
   return c.json({ message: "Store deleted" });
-});
-
-// POST /stores → 作成（認証必須、idはAUTOINCREMENTなので不要）
-storesRoute.post("/", authMiddleware, async (c) => {
-  const { createStoreUseCase } = createContainer(c.env);
-  const payload = c.get("jwtPayload");
-  const userId = payload.sub;
-  if (!userId) return c.json({ message: "Unauthorized" }, 401);
-
-  const body = await c.req.json();
-
-  const store = await createStoreUseCase.execute({
-    name: body.name,
-    lat: body.lat,
-    lng: body.lng,
-  });
-
-  return c.json({ message: "Store created", store });
 });
 
 export default storesRoute;
