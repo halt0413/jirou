@@ -25,6 +25,12 @@ import { CreateCallUseCase } from "./application/calls/createCall.usecase";
 import { FindCallsByUserIdUseCase } from "./application/calls/findCallsByUserId.usecase";
 import { DeleteCallUseCase } from "./application/calls/deleteCall.usecase";
 
+import { DrizzleStoreRepository } from "./infra/repository/d1_store.repository";
+import { CreateStoreUseCase } from "./application/stores/create_store.usecase";
+import { GetStoreUseCase } from "./application/stores/get_store.usecase";
+import { UpdateStoreUseCase } from "./application/stores/update_store.usecase";
+import { DeleteStoreUseCase } from "./application/stores/delete_store.usecase";
+
 export const createContainer = (env: Env) => {
   const db = drizzle(env.DB, { schema });
 
@@ -39,6 +45,9 @@ export const createContainer = (env: Env) => {
   const userRepository = new DrizzleUserRepository(db);
   const passwordHasher = new BcryptPasswordHasher();
   const tokenProvider = new HonoTokenProvider(env.JWT_SECRET);
+
+  // ===== Stores =====
+  const storeRepository = new DrizzleStoreRepository(db);
 
   return {
     // posts
@@ -68,6 +77,12 @@ export const createContainer = (env: Env) => {
     deleteCallUseCase: new DeleteCallUseCase(callsRepository) ,
 
     // updates
-    updateProfileUseCase: new UpdateProfileUseCase(userRepository)
+    updateProfileUseCase: new UpdateProfileUseCase(userRepository),
+    
+    // stores
+    createStoreUseCase: new CreateStoreUseCase(storeRepository),
+    getStoreUseCase: new GetStoreUseCase(storeRepository),
+    updateStoreUseCase: new UpdateStoreUseCase(storeRepository),
+    deleteStoreUseCase: new DeleteStoreUseCase(storeRepository),
   };
 };

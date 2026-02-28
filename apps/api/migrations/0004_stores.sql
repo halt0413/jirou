@@ -1,0 +1,7 @@
+-- 0004_stores.sql
+CREATE TABLE stores (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL UNIQUE,
+    lat REAL NOT NULL,
+    lng REAL NOT NULL
+);
