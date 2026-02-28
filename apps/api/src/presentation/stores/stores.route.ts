@@ -27,20 +27,27 @@ storesRoute.get("/:id", zValidator("param", getStoreSchema), async (c) => {
 });
 
 // 作成 (POST)
-storesRoute.post("/", zValidator("json", createStoreSchema), async (c) => {
-  const { name, lat, lng } = c.req.valid("json");
+storesRoute.post("/", async (c) => {
+  const { createStoreUseCase } = createContainer(c.env);
   const payload = c.get("jwtPayload");
-  const userId = payload?.sub;
+  const userId = payload.sub;
   if (!userId) return c.json({ message: "Unauthorized" }, 401);
 
-  const { createStoreUseCase } = createContainer(c.env);
+  const body = await c.req.json();
 
   try {
-    const store = await createStoreUseCase.execute({ name, lat, lng });
-    return c.json({ message: "Store created", store }, 201);
-  } catch (err: any) {
-    if (err?.cause?.message?.includes("UNIQUE constraint failed")) {
-      return c.json({ message: "This store name already exists" }, 400);
+    const store = await createStoreUseCase.execute({
+      name: body.name,
+      lat: body.lat,
+      lng: body.lng,
+    });
+
+    return c.json({ message: "Store created", store });
+  } catch (err: unknown) { 
+    if (err instanceof Error) { 
+      if (err.message.includes("UNIQUE constraint failed")) {
+        return c.json({ message: "This store name already exists" }, 400);
+      }
     }
     return c.json({ message: "Failed to create store" }, 500);
   }
