@@ -77,7 +77,7 @@ export const getCallsRequest = async (): Promise<CallResponse[]> => {
     throw new Error("ユーザー情報が取得できません");
   }
 
-  const url = `${baseUrl}/calls/${userId}`;
+  const url = `${baseUrl}/calls`;
 
   const res = await fetch(url, {
     method: "GET",

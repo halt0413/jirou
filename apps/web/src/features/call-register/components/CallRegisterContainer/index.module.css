@@ -1,15 +1,15 @@
 .page {
-  min-height: 100vh;
-  background: #e6e6e6;
-  padding-bottom: calc(100px + env(safe-area-inset-bottom));
+  min-height: 100svh;
+  background: #F5C255;
+  padding-bottom: calc(72px + env(safe-area-inset-bottom));
 }
 
 .content {
-  padding: 16px;
-  max-width: 420px;
+  padding: 12px;
+  max-width: 400px;
   margin: 0 auto;
 }
 
 .issueArea {
-  margin-top: 22px;
+  margin-top: 14px;
 }

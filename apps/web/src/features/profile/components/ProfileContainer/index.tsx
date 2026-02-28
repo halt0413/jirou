@@ -16,11 +16,11 @@ export const ProfileContainer = () => {
     return (
         <div className={styles.container}>
             {/* ヘッダー部分 */}
-            <ProfileHeader name={name} message="ひとこと" />
+            <ProfileHeader name={name} message="二郎さいこーー！" />
 
             {/* プロフィール変更ボタン */}
             <div className={styles.buttonWrapper}>
-                <Button  variant='success' fullWidth>
+                <Button variant='success' fullWidth className={styles.profileEditButton}>
                     プロフィール編集
                 </Button>
             </div>
