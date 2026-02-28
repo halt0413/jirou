@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { createPostProxy } from "@/infrastructure/posts/createPostProxy";
 
+export const runtime = "edge";
+
 export async function POST(req: Request) {
   try {
     const input = (await req.json()) as {
