@@ -6,8 +6,8 @@ export const CreateCallSchema = z.object({
     yasai: z.number().min(0).max(2).nullable().optional(),
     abura: z.number().min(0).max(2).nullable().optional(),
     karame: z.number().min(1).max(2).nullable().optional(),
-    masi: z.number().min(1).max(2).nullable().optional(),
-    masimasi: z.number().min(1).max(2).nullable().optional(),
+    masi: z.number().min(0).max(1).nullable().optional(),
+    masimasi: z.number().min(0).max(1).nullable().optional(),
 
 });
 
