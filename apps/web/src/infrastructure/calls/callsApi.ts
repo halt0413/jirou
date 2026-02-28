@@ -1,5 +1,6 @@
 import type { CallOrder } from "@/domain/calls/call";
 import { getAccessTokenCookie } from "@/infrastructure/auth/tokenStorage";
+import { getUserIdFromToken } from "@/infrastructure/auth/tokenPayload";
 
 type CreateCallResponse = {
   id: number;
@@ -10,6 +11,8 @@ type CreateCallResponse = {
   abura: number | null;
   karame: number | null;
 };
+
+export type CallResponse = CreateCallResponse;
 
 const getApiBaseUrl = () => {
   const base = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -56,4 +59,45 @@ export const createCallRequest = async (
   }
 
   return data;
+};
+
+export const getCallsRequest = async (): Promise<CallResponse[]> => {
+  const baseUrl = getApiBaseUrl();
+  const token = getAccessTokenCookie();
+  const userId = token ? getUserIdFromToken(token) : null;
+
+  if (!userId) {
+    throw new Error("ユーザー情報が取得できません");
+  }
+
+  const url = `${baseUrl}/calls/${userId}`;
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const rawText = await res.text();
+  const contentType = res.headers.get("content-type") ?? "";
+
+  if (!res.ok) {
+    throw new Error(rawText || `取得に失敗しました (${res.status})`);
+  }
+
+  if (!rawText) {
+    return [];
+  }
+
+  if (!contentType.includes("application/json")) {
+    throw new Error("取得に失敗しました");
+  }
+
+  try {
+    const data = JSON.parse(rawText) as CallResponse[];
+    return data;
+  } catch {
+    throw new Error("取得に失敗しました");
+  }
 };
