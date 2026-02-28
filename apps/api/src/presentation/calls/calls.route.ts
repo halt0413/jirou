@@ -1,5 +1,5 @@
 import { zValidator } from "@hono/zod-validator";
-import { CreateCallSchema, userIdGetPostsSchema } from "@repo/schemas";
+import { CreateCallSchema } from "@repo/schemas";
 import { Hono } from "hono";
 import { createContainer } from "../../container";
 import { Env } from "../../types/env";
@@ -24,8 +24,10 @@ callsRoute.post("/", zValidator("json", CreateCallSchema), async (c) => {
     }
 })
 
-callsRoute.get("/:userId", zValidator("param", userIdGetPostsSchema), async (c) => {
-    const { userId } = c.req.valid("param");
+callsRoute.get("/", async (c) => {
+    const payload = c.get("jwtPayload");
+    const userId = payload.sub;
+    
     const { findCallsByUserIdUseCase } = createContainer(c.env);
 
     try {
@@ -53,9 +55,5 @@ callsRoute.delete("/:callId", async (c) => {
         return c.json({ error: "エラー" }, 500);
     }
 });
-
-
-
-
 
 export default callsRoute;

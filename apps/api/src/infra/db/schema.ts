@@ -1,4 +1,4 @@
-import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
+import { sqliteTable, text, integer, real } from "drizzle-orm/sqlite-core";
 import { sql } from "drizzle-orm";
 
 export const users = sqliteTable("users", {
@@ -31,4 +31,11 @@ export const calls = sqliteTable("calls", {
   karame: integer("karame"),
   masi: integer("masi"),
   masimasi: integer("masimasi")
+})
+
+export const stores = sqliteTable("stores", {
+  id: integer("id").primaryKey({autoIncrement: true}),
+  name: text("name").notNull().unique(),
+  lat: real("lat").notNull(),
+  lng: real("lng").notNull(),
 })
