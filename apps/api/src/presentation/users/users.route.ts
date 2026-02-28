@@ -80,7 +80,6 @@ usersRoute.patch(
       return c.json({ error: "認証が必要です" }, 401);
     }
 
-
     try {
       await updateProfileUseCase.execute(userId, body);
 
