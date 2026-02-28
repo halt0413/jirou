@@ -17,4 +17,6 @@ export interface UserRepository {
       review?: number | null;
     }
   ): Promise<void>;
+
+  incrementReview(userId: string): Promise<void>;
 }

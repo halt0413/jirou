@@ -1,5 +1,5 @@
 import type { DrizzleD1Database } from "drizzle-orm/d1";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import * as schema from "../db/schema";
 import { users } from "../db/schema";
 
@@ -103,5 +103,14 @@ export class DrizzleUserRepository implements UserRepository {
       store: user.store,
       review: user.review,
     };
+  }
+
+  async incrementReview(userId: string): Promise<void> {
+    await this.db
+      .update(schema.users)
+      .set({
+        review: sql`${schema.users.review} + 1`,
+      })
+      .where(eq(schema.users.id, userId));
   }
 }

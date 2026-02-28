@@ -8,8 +8,8 @@ import { DrizzleD1Database } from "drizzle-orm/d1";
 export class D1PostsRepository implements PostsRepository {
     constructor(private readonly db: DrizzleD1Database<typeof schema>) {}
 
-    async create(post: Posts): Promise<number> {
-        const result = await this.db.insert(schema.posts).values({
+    async create(post: Posts, tx = this.db): Promise<number> {
+        const result = await tx.insert(schema.posts).values({
             storeName: post.storeName,
             userId: post.userId,
             score: post.score,

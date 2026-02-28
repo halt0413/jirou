@@ -53,7 +53,7 @@ export const createContainer = (env: Env) => {
 
   return {
     // posts
-    createPostUseCase : new CreatePostUseCase(postRepository),
+    createPostUseCase : new CreatePostUseCase(postRepository, userRepository,),
     findPostsByUserIdUseCase: new FindPostsByUserIdUseCase(postRepository),
     findPostsByPostIdUseCase: new FindPostsByPostIdUseCase(postRepository),
     updatePostUseCase: new UpdatePostUseCase(postRepository),
