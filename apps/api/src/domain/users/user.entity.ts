@@ -7,3 +7,9 @@ export type User = {
   review: number | null;
   createdAt: Date;
 };
+
+export type UserProfile = {
+  name: string;
+  store: string | null;
+  review: number | null;
+};
