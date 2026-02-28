@@ -8,7 +8,14 @@ import styles from './index.module.css';
 export const BottomNav = () => {
     const pathname = usePathname();
 
-  // 遷移先の項目を定義
+    const hideRoutes = ['/auth'];
+
+    // 現在のページが hideRoutes に含まれていたら、表示しない
+    if (hideRoutes.includes(pathname)) {
+        return null;
+    }
+
+    // 遷移先の項目を定義
     const navItems = [
         { name: 'マップ', href: '/map', icon: Map },
         { name: 'ホーム', href: '/profile', icon: Home },
