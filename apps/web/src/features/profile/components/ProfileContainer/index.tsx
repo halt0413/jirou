@@ -20,7 +20,7 @@ export const ProfileContainer = () => {
 
             {/* プロフィール変更ボタン */}
             <div className={styles.buttonWrapper}>
-                <Button  variant='success' fullWidth>
+                <Button variant='success' fullWidth className={styles.profileEditButton}>
                     プロフィール編集
                 </Button>
             </div>
