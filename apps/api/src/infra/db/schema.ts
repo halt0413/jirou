@@ -27,4 +27,6 @@ export const calls = sqliteTable("calls", {
   yasai: integer("yasai"),
   abura: integer("abura"),
   karame: integer("karame"),
+  masi: integer("masi"),
+  masimasi: integer("masimasi")
 })
