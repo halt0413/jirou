@@ -15,6 +15,8 @@ async function createBearerToken() {
     .sign(key);
 }
 
+export const runtime = 'edge';
+
 export async function GET() {
   const base = process.env.NEXT_PUBLIC_API_BASE_URL;
   if (!base) {
