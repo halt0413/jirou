@@ -1,4 +1,5 @@
 import React from 'react';
+import { ProfileHeader } from '../ProfileHeader';
 import { StampCard } from '../StampCard';
 import { InfoCard } from '../InfoCard';
 import { Button } from '../../../../components/Button';
@@ -9,13 +10,7 @@ export const ProfileContainer = () => {
     return (
         <div className={styles.container}>
             {/* ヘッダー部分 */}
-            <div className={styles.header}>
-                <div className={styles.avatar}></div>
-                <div className={styles.profileInfo}>
-                <h1 className={styles.name}>名前</h1>
-                <p className={styles.message}>ひとこと</p>
-                </div>
-            </div>
+            <ProfileHeader name="なまえ" message="ひとこと" />
 
             {/* プロフィール変更ボタン */}
             <div className={styles.buttonWrapper}>

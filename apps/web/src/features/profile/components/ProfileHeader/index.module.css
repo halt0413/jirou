@@ -1,0 +1,32 @@
+.header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 32px 16px 16px;
+}
+
+.avatar {
+    width: 64px;
+    height: 64px;
+    background-color: #d1d5db;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.profileInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #000000;
+    margin: 0;
+}
+
+.message {
+    font-size: 14px;
+    color: #4b5563;
+    margin: 4px 0 0;
+}
