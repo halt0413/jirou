@@ -69,7 +69,7 @@ usersRoute.patch(
   authMiddleware,
   zValidator("json", UpdateProfileSchema),
   async (c) => {
-    const body = c.req.valid("json");
+    const { store } = c.req.valid("json");
 
     const { updateProfileUseCase } = createContainer(c.env);
 
@@ -81,7 +81,7 @@ usersRoute.patch(
     }
 
     try {
-      await updateProfileUseCase.execute(userId, body);
+      await updateProfileUseCase.execute(userId, store);
 
       return c.json({ message: "更新成功" }, 200);
     } catch (error) {
