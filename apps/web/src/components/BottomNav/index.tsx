@@ -8,10 +8,15 @@ import styles from './index.module.css';
 export const BottomNav = () => {
     const pathname = usePathname();
 
-    const hideRoutes = ['/auth'];
+    const showRoutes = [
+        '/map', 
+        '/profile', 
+        '/call-register', 
+        '/call-play'
+    ];
 
-    // 現在のページが hideRoutes に含まれていたら、表示しない
-    if (hideRoutes.includes(pathname)) {
+    // 現在のページが showRoutes に含まれていなければ表示しない
+    if (!showRoutes.includes(pathname)) {
         return null;
     }
 
