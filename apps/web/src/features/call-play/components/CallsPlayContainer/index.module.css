@@ -2,6 +2,7 @@
   background: #e5e5e5;
   min-height: 100vh;
   padding: 16px;
+  padding-bottom: calc(100px + env(safe-area-inset-bottom));
 }
 
 .header {
