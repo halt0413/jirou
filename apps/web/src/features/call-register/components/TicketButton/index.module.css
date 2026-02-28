@@ -7,6 +7,11 @@
   transition: transform 0.05s ease;
 }
 
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
 .bg {
   width: 65px;
   display: block;
