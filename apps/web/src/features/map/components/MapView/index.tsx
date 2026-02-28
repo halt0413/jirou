@@ -5,10 +5,15 @@ import { useCallback, useState } from "react";
 import { useMapboxMap } from "../../hooks/useMapboxMap";
 import { useCurrentLocationOnMap } from "../../hooks/useCurrentLocationOnMap";
 import { useStoresOnMap } from "../../hooks/useStoresOnMap";
+import PostModal from "../PostModalContainer";
+import type { Store } from "@/infrastructure/stores/fetchStores";
 
 export default function MapView() {
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
-  const { loadAndRender } = useStoresOnMap();
+  const [selectedStore, setSelectedStore] = useState<Store | null>(null);
+  const { loadAndRender } = useStoresOnMap({
+    onPostClick: (store) => setSelectedStore(store),
+  });
 
   const setRef = useCallback((node: HTMLDivElement | null) => {
     setContainer(node);
@@ -36,5 +41,17 @@ export default function MapView() {
   },
 });
 
-  return <div ref={setRef} className={styles.map} />;
+  return (
+    <>
+      <div ref={setRef} className={styles.map} />;
+
+      {selectedStore && (
+        <PostModal
+          storeName={selectedStore.name}
+          onClose={() => setSelectedStore(null)}
+          onPosted={(id) => console.log("posted id:", id)}
+        />
+      )}
+    </>
+  )
 }

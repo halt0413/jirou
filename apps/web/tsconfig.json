@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "next.config.js", "next.config.mjs"  ],
+, "next.config.js", "next.config.mjs", "src/features/map/components/PostModalView"  ],
   "exclude": ["node_modules"]
 }
