@@ -5,6 +5,8 @@ type Props = {
   onClick?: () => void;
   variant?: "danger" | "success" | "primary";
   fullWidth?: boolean;
+  className?: string;
+  disabled?: boolean;
 };
 
 export const Button = ({
@@ -12,13 +14,17 @@ export const Button = ({
   onClick,
   variant = "primary",
   fullWidth = false,
+  className = "",
+  disabled = false,
 }: Props) => {
   return (
     <button
       onClick={onClick}
       className={`${styles.button} ${styles[variant]} ${
         fullWidth ? styles.fullWidth : ""
-      }`}
+      } ${className}`}
+      type="button"
+      disabled={disabled}
     >
       {children}
     </button>

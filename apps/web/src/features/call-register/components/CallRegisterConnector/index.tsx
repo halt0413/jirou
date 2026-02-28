@@ -22,6 +22,7 @@ export const CallRegisterConnector = () => {
       onAburaChange={vm.setAbura}
       onKarameChange={vm.setKarame}
       onIssue={vm.issueTicket}
+      isIssuing={vm.isIssuing}
     />
   );
 };

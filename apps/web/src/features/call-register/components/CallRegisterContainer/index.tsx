@@ -33,6 +33,7 @@ type Props = {
   onKarameChange: (v: KarameLevel) => void;
 
   onIssue: () => void;
+  isIssuing?: boolean;
 };
 
 export const CallRegisterPage = ({
@@ -51,6 +52,7 @@ export const CallRegisterPage = ({
   onAburaChange,
   onKarameChange,
   onIssue,
+  isIssuing = false,
 }: Props) => {
   const isLocked = menu === "all-mashi" || menu === "all-mashimashi";
   return (
@@ -90,7 +92,7 @@ export const CallRegisterPage = ({
         />
 
         <div className={styles.issueArea}>
-          <TicketingButton onClick={onIssue} />
+          <TicketingButton onClick={onIssue} disabled={isIssuing} />
         </div>
       </div>
     </div>
