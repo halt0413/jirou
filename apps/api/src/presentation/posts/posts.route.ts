@@ -94,7 +94,6 @@ postsRoute.post("/images/:postId", async (c) => {
 
 postsRoute.get("/images/:userId", async (c) => {
     const userId = c.req.param("userId");
-    console.log("userId:", userId); // ← 追加
 
     if (!userId) {
         return c.json({ error: "userId is missing" }, 400);
