@@ -15,26 +15,26 @@
 
 .iconBox {
   position: absolute;
-  top: 10px;
+  top: 6px;
   left: 50%;
   transform: translateX(-50%);
-  width: 72%;
+  width: 70%;
   display: grid;
   place-items: center;
 }
 
 .icon {
-  width: 75px;
+  width: 62px;
   display: block;
 }
 
 .label {
   position: absolute;
-  bottom: 12px;
+  bottom: 8px;
   left: 50%;
   transform: translateX(-50%);
   font-weight: 900;
-  font-size: 22px;
+  font-size: 18px;
   white-space: nowrap;
 }
 

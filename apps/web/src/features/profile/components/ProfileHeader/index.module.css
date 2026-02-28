@@ -1,13 +1,13 @@
 .header {
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 32px 16px 16px;
+    gap: 12px;
+    padding: 20px 12px 12px;
 }
 
 .avatar {
-    width: 64px;
-    height: 64px;
+    width: 52px;
+    height: 52px;
     background-color: #d1d5db;
     border-radius: 50%;
     flex-shrink: 0;
@@ -21,14 +21,14 @@
 }
 
 .name {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     color: #000000;
     margin: 0;
 }
 
 .message {
-    font-size: 14px;
+    font-size: 12px;
     color: #4b5563;
     margin: 4px 0 0;
 }

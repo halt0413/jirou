@@ -1,13 +1,13 @@
 .wrapper {
   display: flex;
   justify-content: flex-end;
-  margin: 8px 0 12px;
+  margin: 6px 0 8px;
 }
 
 .select {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 14px;
-  padding: 10px;
+  font-size: 13px;
+  padding: 8px;
   border: 1px solid #D9D9D9;
   border-radius: 3px;
   background-color: #f5f5f5;

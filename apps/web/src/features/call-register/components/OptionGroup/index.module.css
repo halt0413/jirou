@@ -1,17 +1,17 @@
 .group {
-  margin-top: 14px;
+  margin-top: 10px;
 }
 
 .title {
-  margin: 0 0 8px;
-  font-size: 22px;
+  margin: 0 0 6px;
+  font-size: 18px;
   font-weight: 900;
 }
 
 .grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
 }
 
 .disabled {
