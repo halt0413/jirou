@@ -30,6 +30,7 @@ import { CreateStoreUseCase } from "./application/stores/create_store.usecase";
 import { GetStoreUseCase } from "./application/stores/get_store.usecase";
 import { UpdateStoreUseCase } from "./application/stores/update_store.usecase";
 import { DeleteStoreUseCase } from "./application/stores/delete_store.usecase";
+import { GetProfileUseCase } from "./application/users/getProfile.usecase";
 
 export const createContainer = (env: Env) => {
   const db = drizzle(env.DB, { schema });
@@ -78,6 +79,8 @@ export const createContainer = (env: Env) => {
 
     // updates
     updateProfileUseCase: new UpdateProfileUseCase(userRepository),
+    getProfileUseCase: new GetProfileUseCase(userRepository),
+    
     
     // stores
     createStoreUseCase: new CreateStoreUseCase(storeRepository),

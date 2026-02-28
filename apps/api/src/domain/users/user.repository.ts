@@ -1,7 +1,8 @@
-import type { User } from "./user.entity";
+import type { User, UserProfile } from "./user.entity";
 
 export interface UserRepository {
   findByEmail(email: string): Promise<User | null>;
+  getProfile(userId: string): Promise<UserProfile | null>;
 
   create(
     name: string,

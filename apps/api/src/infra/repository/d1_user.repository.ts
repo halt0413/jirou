@@ -4,7 +4,7 @@ import * as schema from "../db/schema";
 import { users } from "../db/schema";
 
 import type { UserRepository } from "../../domain/users/user.repository";
-import type { User } from "../../domain/users/user.entity";
+import type { User, UserProfile } from "../../domain/users/user.entity";
 
 export class DrizzleUserRepository implements UserRepository {
   private db: DrizzleD1Database<typeof schema>;
@@ -67,25 +67,41 @@ export class DrizzleUserRepository implements UserRepository {
   }
 
   async updateProfile(
-  userId: string,
-  data: {
-    store?: string | null;
-    review?: number | null;
-  }
-): Promise<void> {
-  const updateData: Record<string, unknown> = {};
+    userId: string,
+    data: {
+      store?: string | null;
+      review?: number | null;
+    }
+  ): Promise<void> {
+    const updateData: Record<string, unknown> = {};
 
-  if (data.store !== undefined) {
-    updateData.store = data.store;
+    if (data.store !== undefined) {
+      updateData.store = data.store;
+    }
+
+    if (data.review !== undefined) {
+      updateData.review = data.review;
+    }
+
+    await this.db
+      .update(users)
+      .set(updateData)
+      .where(eq(users.id, userId));
   }
 
-  if (data.review !== undefined) {
-    updateData.review = data.review;
-  }
+  async getProfile(userId: string): Promise<UserProfile> {
+    const user = await this.db.query.users.findFirst({
+      where: (users, { eq }) => eq(users.id, userId),
+    });
 
-  await this.db
-    .update(users)
-    .set(updateData)
-    .where(eq(users.id, userId));
-}
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    return {
+      name: user.name,
+      store: user.store,
+      review: user.review,
+    };
+  }
 }
