@@ -27,13 +27,13 @@ storesRoute.get("/:id", zValidator("param", getStoreSchema), async (c) => {
 });
 
 // 作成 (POST)
-storesRoute.post("/", async (c) => {
+storesRoute.post("/", zValidator("json", createStoreSchema), async (c) => {
   const { createStoreUseCase } = createContainer(c.env);
   const payload = c.get("jwtPayload");
   const userId = payload.sub;
   if (!userId) return c.json({ message: "Unauthorized" }, 401);
 
-  const body = await c.req.json();
+  const body = c.req.valid("json");
 
   try {
     const store = await createStoreUseCase.execute({
