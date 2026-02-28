@@ -91,4 +91,17 @@ usersRoute.patch(
   }
 );
 
+usersRoute.get("/:userId", async (c) => {
+  const userId = c.req.param("userId");
+
+  const { getProfileUseCase } = createContainer(c.env);
+
+  try {
+    const profile = await getProfileUseCase.execute(userId);
+    return c.json(profile, 200);
+  } catch (e) {
+    return c.json({ message: "User not found" }, 404);
+  }
+})
+
 export default usersRoute;
