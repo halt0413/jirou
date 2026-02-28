@@ -30,7 +30,7 @@ export const LoginForm = () => {
     try {
       setSubmitError(null);
       await loginUser(values);
-      redirect("/call-play");
+      redirect("/call-register");
     } catch (error) {
       setSubmitError(
         error instanceof Error ? error.message : "ログインに失敗しました"
