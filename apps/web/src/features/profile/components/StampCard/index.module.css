@@ -1,0 +1,44 @@
+.wrapper {
+    padding: 0 16px;
+    margin-bottom: 16px;
+}
+
+.card {
+    background-color: white;
+    border-radius: 2px;
+    padding: 16px;
+    border: 5px solid #8a4a40;
+}
+
+.title {
+    text-align: center;
+    font-weight: 900;
+    font-size: 20px;
+    margin: 0 0 16px;
+    letter-spacing: 0.1em;
+    color: #000000;
+}
+
+.stampArea {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.stampCircle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid #8a4a40;
+}
+
+.divider {
+    border: none;
+    border-top: 2px dotted #8a4a40;
+    margin: 0;
+}
