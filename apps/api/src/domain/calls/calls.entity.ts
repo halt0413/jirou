@@ -7,5 +7,7 @@ export class Calls {
         public readonly yasai: number | null,
         public readonly abura: number | null,
         public readonly karame: number | null,
+        public readonly masi: number | null,
+        public readonly masimasi: number | null
     ) {}
 }

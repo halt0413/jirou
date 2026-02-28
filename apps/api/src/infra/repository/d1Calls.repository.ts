@@ -14,7 +14,9 @@ export class D1CallsRepository implements CallsRepository {
             ninniku: call.ninniku,
             yasai: call.yasai,
             abura: call.abura,
-            karame: call.karame
+            karame: call.karame,
+            masi: call.masi,
+            masimasi: call.masimasi,
         });
         const insertedId = result.meta?.last_row_id;
                     
@@ -38,7 +40,9 @@ export class D1CallsRepository implements CallsRepository {
                 row.ninniku,
                 row.yasai,
                 row.abura,
-                row.karame
+                row.karame,
+                row.masi,
+                row.masimasi,
         ));
     }
 }
