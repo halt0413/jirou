@@ -17,4 +17,6 @@ export interface StoreRepository {
   ): Promise<void>;
 
   delete(id: number): Promise<void>;
+
+  getAll(): Promise<Store[]>;
 }

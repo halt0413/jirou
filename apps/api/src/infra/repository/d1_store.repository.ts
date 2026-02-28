@@ -87,4 +87,15 @@ export class DrizzleStoreRepository implements StoreRepository {
       .delete(stores)
       .where(eq(stores.id, id));
   }
+
+  async getAll(): Promise<Store[]> {
+    const result = await this.db.select().from(stores);
+
+    return result.map((row) => ({
+      id: row.id,
+      name: row.name,
+      lat: row.lat,
+      lng: row.lng
+    }));
+  }
 }
