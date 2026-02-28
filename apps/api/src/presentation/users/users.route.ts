@@ -99,7 +99,7 @@ usersRoute.get("/:userId", async (c) => {
   try {
     const profile = await getProfileUseCase.execute(userId);
     return c.json(profile, 200);
-  } catch (e) {
+  } catch {
     return c.json({ message: "User not found" }, 404);
   }
 })
