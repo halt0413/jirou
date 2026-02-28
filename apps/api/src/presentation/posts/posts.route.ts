@@ -51,6 +51,20 @@ postsRoute.get("post/:postId", async (c) => {
     }
 });
 
+postsRoute.get("store/:storeName", async (c) => {
+    const storeName = c.req.param("storeName");
+
+    const { findPostsByStoreUseCase } = createContainer(c.env);
+
+    try {
+        const posts = await findPostsByStoreUseCase.execute(storeName);
+        return c.json(posts, 200);
+    } catch (error) {
+        console.log(error)
+        return c.json({error: "エラー" }, 500);
+    }
+})
+
 postsRoute.put("/:postId", zValidator("json", updatePostSchema), async (c) => {
     const postId = Number(c.req.param("postId"));
     const input = c.req.valid("json");
