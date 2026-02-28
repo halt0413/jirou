@@ -95,8 +95,8 @@ export const getCallsRequest = async (): Promise<CallResponse[]> => {
   }
 
   try {
-    const data = JSON.parse(rawText) as CallResponse[];
-    return data;
+    const data = JSON.parse(rawText) as CallResponse[] | CallResponse;
+    return Array.isArray(data) ? data : [data];
   } catch {
     throw new Error("取得に失敗しました");
   }
