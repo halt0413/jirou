@@ -65,6 +65,26 @@ postsRoute.get("store/:storeName", async (c) => {
     }
 })
 
+postsRoute.get("storeImg/:storeName", async (c) => {
+    const storeName = c.req.param("storeName");
+
+    const { findPostsByStoreUseCase } = createContainer(c.env);
+
+    const posts = await findPostsByStoreUseCase.execute(storeName);
+
+    const baseUrl =
+    "https://pub-25b3273b858541b2bce490e28e512b1c.r2.dev";
+
+    const images = posts
+        .filter((p) => p.imageKey)
+        .map((p) => ({
+            postId: p.id,
+            imageUrl: `${baseUrl}/${p.imageKey}`,
+        })
+    );
+    return c.json(images);
+})
+
 postsRoute.put("/:postId", zValidator("json", updatePostSchema), async (c) => {
     const postId = Number(c.req.param("postId"));
     const input = c.req.valid("json");
