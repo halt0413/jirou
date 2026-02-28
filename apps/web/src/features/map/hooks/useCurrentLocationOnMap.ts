@@ -11,22 +11,29 @@ export function useCurrentLocationOnMap(options: Options = {}) {
   const { zoom = 15 } = options;
   const userMarkerRef = useRef<mapboxgl.Marker | null>(null);
 
-  const placeOrMoveUserMarker = useCallback((map: mapboxgl.Map, lng: number, lat: number) => {
-    if (userMarkerRef.current) {
-      userMarkerRef.current.setLngLat([lng, lat]);
-      return;
-    }
-    const el = createCurrentLocationMarkerElement();
-    userMarkerRef.current = new mapboxgl.Marker({ element: el })
-      .setLngLat([lng, lat])
-      .addTo(map);
-  }, []);
+  const placeOrMoveUserMarker = useCallback(
+    (map: mapboxgl.Map, lng: number, lat: number) => {
+      if (userMarkerRef.current) {
+        userMarkerRef.current.setLngLat([lng, lat]);
+        return;
+      }
+
+      const el = createCurrentLocationMarkerElement();
+      userMarkerRef.current = new mapboxgl.Marker({ element: el })
+        .setLngLat([lng, lat])
+        .addTo(map);
+    },
+    []
+  );
 
   const goToCurrentLocation = useCallback(
     async (map: mapboxgl.Map) => {
       try {
         const { lat, lng } = await getCurrentPosition();
-        map.flyTo({ center: [lng, lat], zoom, essential: true });
+
+        // 初回はjumpTo推奨
+        map.jumpTo({ center: [lng, lat], zoom });
+
         placeOrMoveUserMarker(map, lng, lat);
       } catch (e: unknown) {
         if (e instanceof GeolocationPositionError) {
