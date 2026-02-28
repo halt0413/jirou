@@ -10,6 +10,8 @@ type CreateCallResponse = {
   yasai: number | null;
   abura: number | null;
   karame: number | null;
+  masi: number | null;
+  masimasi: number | null;
 };
 
 export type CallResponse = CreateCallResponse;
@@ -51,6 +53,11 @@ export const createCallRequest = async (
         : data?.error
         ? JSON.stringify(data.error)
         : rawText || "発券に失敗しました";
+    console.error("createCallRequest error", {
+      status: res.status,
+      message,
+      rawText,
+    });
     throw new Error(message);
   }
 
@@ -95,8 +102,8 @@ export const getCallsRequest = async (): Promise<CallResponse[]> => {
   }
 
   try {
-    const data = JSON.parse(rawText) as CallResponse[];
-    return data;
+    const data = JSON.parse(rawText) as CallResponse[] | CallResponse;
+    return Array.isArray(data) ? data : [data];
   } catch {
     throw new Error("取得に失敗しました");
   }

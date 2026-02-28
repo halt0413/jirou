@@ -14,6 +14,8 @@ export class CreateCallUseCase {
             input.yasai ?? null,
             input.abura ?? null,
             input.karame ?? null,
+            input.masi ?? null,
+            input.masimasi ?? null,
         )
         const id = await this.repo.create(call);
         return new Calls(
@@ -23,7 +25,9 @@ export class CreateCallUseCase {
             call.ninniku,
             call.yasai,
             call.abura,
-            call.karame
+            call.karame,
+            call.masi,
+            call.masimasi,
         );
     }
 }

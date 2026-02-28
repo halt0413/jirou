@@ -77,6 +77,8 @@ export const useCallRegister = () => {
         yasai: mapLevelToValue(yasai),
         abura: mapLevelToValue(abura),
         karame: mapLevelToValue(karame),
+        masi: menu === "all-mashi" ? 1 : null,
+        masimasi: menu === "all-mashimashi" ? 1 : null,
       };
 
       await createCall(payload);

@@ -1,0 +1,36 @@
+.container {
+    min-height: 100vh;
+    background-color: #F5C255;
+    padding-bottom: 80px;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.buttonWrapper {
+    padding: 0 16px;
+    margin-bottom: 24px;
+}
+
+.cardsSection {
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.linkButton {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.linkButton:active {
+    transform: scale(0.98);
+}
+
+.redText {
+    color: #dc2626;
+}

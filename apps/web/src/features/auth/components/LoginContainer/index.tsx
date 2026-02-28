@@ -1,24 +1,25 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { LoginForm } from "../LoginForm";
 import styles from "./index.module.css";
-
-const IllustrationPlaceholder = () => {
-  return (
-    //後からsvgに差し替える
-    <div className={styles.illustration} aria-hidden="true">
-      ILLUSTRATION
-    </div>
-  );
-};
 
 export const LoginContainer = () => {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
         <div className={styles.illustrationWrap}>
-          <IllustrationPlaceholder />
+          <div className={styles.illustration}>
+            <Image
+              src="/jirou.svg"
+              alt="Jirou"
+              fill
+              priority
+              sizes="(max-width: 480px) 70vw, 260px"
+              style={{ objectFit: "contain" }}
+            />
+          </div>
         </div>
 
         <LoginForm />

@@ -2,9 +2,15 @@ import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import type { Env } from "../../types/env";
 import { createContainer } from "../../container";
-import { LoginSchema, RegisterSchema } from "@repo/schemas";
+import { LoginSchema, RegisterSchema, UpdateProfileSchema } from "@repo/schemas";
+import { authMiddleware } from "../middlewares/authMiddleware";
 
-const usersRoute = new Hono<{ Bindings: Env }>();
+const usersRoute = new Hono<{
+  Bindings: Env;
+  Variables: {
+    userId: string;
+  };
+}>();
 
 // =========================
 // register
@@ -51,6 +57,36 @@ usersRoute.post(
     } catch (error) {
         console.error(error);
       return c.json({ error: "ログイン失敗" }, 401);
+    }
+  }
+);
+
+// =========================
+// update profile (store / review)
+// =========================
+usersRoute.patch(
+  "/update",
+  authMiddleware,
+  zValidator("json", UpdateProfileSchema),
+  async (c) => {
+    const body = c.req.valid("json");
+
+    const { updateProfileUseCase } = createContainer(c.env);
+
+    const payload = c.get("jwtPayload");
+    const userId = payload.sub;
+
+    if (!userId) {
+      return c.json({ error: "認証が必要です" }, 401);
+    }
+
+    try {
+      await updateProfileUseCase.execute(userId, body);
+
+      return c.json({ message: "更新成功" }, 200);
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "更新失敗" }, 400);
     }
   }
 );
