@@ -1,5 +1,5 @@
 .container {
-    min-height: 100vh;
+    min-height: 100svh;
     background-color: #F5C255;
     padding-bottom: 80px;
     max-width: 480px;
@@ -9,14 +9,14 @@
 
 .buttonWrapper {
     padding: 0 16px;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
 }
 
 .cardsSection {
     padding: 0 16px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
 }
 
 .linkButton {
