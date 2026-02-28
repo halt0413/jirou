@@ -5,4 +5,5 @@ export interface PostsRepository {
     findByUserId(userId: string): Promise<Posts[]>;
     findByPostId(postId: number): Promise<Posts>;
     update(post: Posts): Promise<number>;
+    findByStore(storeName: string): Promise<Posts[]>
 }

@@ -76,4 +76,16 @@ export class D1PostsRepository implements PostsRepository {
         );
     }
 
+    async findByStore(storeName: string): Promise<Posts[]> {
+        const storePosts = await this.db.select().from(schema.posts).where(eq(schema.posts.storeName, storeName));
+        return storePosts.map((row) => new Posts(
+            row.id,
+            row.storeName,
+            row.userId,
+            row.score,
+            row.comment,
+            row.imageKey,
+            new Date(row.createdAt)
+        ));
+    }
 }
