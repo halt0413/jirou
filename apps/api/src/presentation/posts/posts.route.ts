@@ -66,7 +66,7 @@ postsRoute.put("/:postId", zValidator("json", updatePostSchema), async (c) => {
     }
 })
 
-postsRoute.post("/:postId/image", async (c) => {
+postsRoute.post("/images/:postId", async (c) => {
     const postId = Number(c.req.param("postId"));
 
     const formData = await c.req.formData();
@@ -91,5 +91,29 @@ postsRoute.post("/:postId/image", async (c) => {
         return c.json({ error: "失敗" }, 400);
     }
 });
+
+postsRoute.get("/images/:userId", async (c) => {
+    const userId = c.req.param("userId");
+    console.log("userId:", userId); // ← 追加
+
+    if (!userId) {
+        return c.json({ error: "userId is missing" }, 400);
+    }
+    const { findPostsByUserIdUseCase } = createContainer(c.env);
+
+    const posts = await findPostsByUserIdUseCase.execute(userId);
+
+    const baseUrl =
+    "https://pub-25b3273b858541b2bce490e28e512b1c.r2.dev";
+
+    const images = posts
+        .filter((p) => p.imageKey)
+        .map((p) => ({
+            postId: p.id,
+            imageUrl: `${baseUrl}/${p.imageKey}`,
+        })
+    );
+    return c.json(images);
+})
 
 export default postsRoute;
