@@ -10,9 +10,10 @@ type Options = {
   center: [number, number];
   zoom: number;
   style: string;
+  onReady?: (map: mapboxgl.Map) => void;
 };
 
-export const useMapboxMap = ({ container, center, zoom, style }: Options) => {
+export const useMapboxMap = ({ container, center, zoom, style, onReady }: Options) => {
   const mapRef = useRef<mapboxgl.Map | null>(null);
 
   useEffect(() => {
@@ -26,11 +27,13 @@ export const useMapboxMap = ({ container, center, zoom, style }: Options) => {
 
     mapRef.current = map;
 
+    onReady?.(map);
+
     return () => {
       map.remove();
       mapRef.current = null;
     };
-  }, [container, center, zoom, style]);
+  }, [container, center, zoom, style, onReady]);
 
   return { mapRef };
 };
