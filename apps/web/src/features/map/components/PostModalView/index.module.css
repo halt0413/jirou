@@ -1,0 +1,247 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(3px);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  z-index: 9999;
+}
+
+.modal {
+  width: min(520px, 100%);
+  border-radius: 18px;
+  border: 3px solid #111;
+  background: linear-gradient(180deg, #fff2b3 0%, #ffe26a 100%);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 3px dashed rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.ticketLabel {
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 1000;
+}
+
+.closeBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 2px solid #111;
+  background: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  font-weight: 1000;
+  font-size: 18px;
+}
+
+.body {
+  padding: 16px;
+  display: grid;
+  gap: 14px;
+}
+
+.card {
+  border: 2px solid #111;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
+  padding: 12px;
+  position: relative;
+}
+
+.punchHole {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #111;
+  opacity: 0.25;
+}
+
+.cardLabel {
+  font-size: 12px;
+  font-weight: 900;
+  opacity: 0.7;
+}
+
+.cardHint {
+  font-size: 12px;
+  font-weight: 900;
+  opacity: 0.6;
+}
+
+.cardHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.storeName {
+  margin-top: 4px;
+  font-size: 18px;
+  font-weight: 1000;
+  color: #111;
+}
+
+/* Stars */
+.starsRow {
+  margin-top: 10px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.starBtn {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 2px solid #111;
+  background: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 35px;
+  font-weight: 900;
+}
+
+.starBtnActive {
+  background: #ffd54a;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
+  transform: translateY(-1px);
+}
+
+.starsValue {
+  margin-left: 8px;
+  font-weight: 900;
+  color: #111;
+}
+
+/* Comment */
+.textarea {
+  width: 100%;
+  margin-top: 8px;
+  border-radius: 12px;
+  border: 2px solid #111;
+  padding: 10px;
+  font-size: 14px;
+  outline: none;
+  resize: vertical;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
+}
+
+/* Image */
+.imageArea {
+  margin-top: 8px;
+  display: grid;
+  gap: 10px;
+}
+
+.fileInput {
+  width: 100%;
+}
+
+.previewBox {
+  border: 2px dashed rgba(0, 0, 0, 0.4);
+  border-radius: 14px;
+  padding: 8px;
+  display: grid;
+  gap: 8px;
+}
+
+.previewImg {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid #111;
+}
+
+.helperText {
+  font-size: 12px;
+  opacity: 0.65;
+}
+
+/* Error */
+.errorBox {
+  border: 2px solid #111;
+  border-radius: 14px;
+  background: #ffe6e6;
+  padding: 10px;
+  font-weight: 900;
+  color: #b00020;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  padding-top: 4px;
+}
+
+.secondaryBtn {
+  border-radius: 14px;
+  border: 2px solid #111;
+  background: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
+  padding: 10px 14px;
+  cursor: pointer;
+  font-weight: 1000;
+}
+
+.primaryBtn {
+  border-radius: 14px;
+  border: 2px solid #111;
+  background: #111;
+  color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
+  padding: 10px 14px;
+  cursor: pointer;
+  font-weight: 1000;
+  letter-spacing: 0.5px;
+}
+
+.primaryBtn:disabled {
+  background: #333;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.perfLine {
+  border-top: 3px dotted rgba(0, 0, 0, 0.45);
+  margin-top: 6px;
+}
+
+.footerNote {
+  font-size: 11px;
+  opacity: 0.65;
+  font-weight: 900;
+}
+
+/* disabled feel */
+.closeBtn:disabled,
+.secondaryBtn:disabled,
+.starBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
