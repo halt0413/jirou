@@ -41,6 +41,7 @@ const mapLevelToValue = (level: string): number | null => {
 
 export const useCallRegister = () => {
   const redirect = useRedirect();
+  const [isIssuing, setIsIssuing] = useState(false);
   const [menu, setMenu] = useState<MenuType | null>(null);
   const [ninniku, setNinniku] = useState<NinnikuLevel>("普通");
   const [yasai, setYasai] = useState<YasaiLevel>("普通");
@@ -64,17 +65,25 @@ export const useCallRegister = () => {
   }, [menu, ninniku, yasai, abura, karame]);
 
   const issueTicket = async () => {
-    console.log("issue", summary);
-    const payload: CallOrder = {
-      title: summary.title,
-      ninniku: mapLevelToValue(ninniku),
-      yasai: mapLevelToValue(yasai),
-      abura: mapLevelToValue(abura),
-      karame: mapLevelToValue(karame),
-    };
+    if (isIssuing) {
+      return;
+    }
+    setIsIssuing(true);
+    try {
+      console.log("issue", summary);
+      const payload: CallOrder = {
+        title: summary.title,
+        ninniku: mapLevelToValue(ninniku),
+        yasai: mapLevelToValue(yasai),
+        abura: mapLevelToValue(abura),
+        karame: mapLevelToValue(karame),
+      };
 
-    await createCall(payload);
-    redirect("/call-play");
+      await createCall(payload);
+      redirect("/call-play");
+    } finally {
+      setIsIssuing(false);
+    }
   };
 
   return {
@@ -101,5 +110,6 @@ export const useCallRegister = () => {
     setAbura,
     setKarame,
     issueTicket,
+    isIssuing,
   };
 };
