@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { SignJWT } from "jose";
 
+export const runtime = 'edge';
+
 async function createBearerToken() {
   const secret = process.env.JWT_SECRET;
   if (!secret) throw new Error("Missing JWT_SECRET");
@@ -14,8 +16,6 @@ async function createBearerToken() {
     .setSubject("web")
     .sign(key);
 }
-
-export const runtime = 'edge';
 
 export async function GET() {
   const base = process.env.NEXT_PUBLIC_API_BASE_URL;
