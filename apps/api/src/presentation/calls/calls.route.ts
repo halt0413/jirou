@@ -1,5 +1,5 @@
 import { zValidator } from "@hono/zod-validator";
-import { CreateCallSchema, userIdGetPostsSchema } from "@repo/schemas";
+import { CreateCallSchema } from "@repo/schemas";
 import { Hono } from "hono";
 import { createContainer } from "../../container";
 import { Env } from "../../types/env";
