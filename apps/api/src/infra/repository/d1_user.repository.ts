@@ -28,6 +28,8 @@ export class DrizzleUserRepository implements UserRepository {
       name: row.name,
       email: row.email,
       password: row.password,
+      store: row.store,
+      review: row.review,
       createdAt: row.created_at
         ? new Date(row.created_at)
         : new Date(),
@@ -56,9 +58,34 @@ export class DrizzleUserRepository implements UserRepository {
       name: row.name,
       email: row.email,
       password: row.password,
+      store: row.store,
+      review: row.review,
       createdAt: row.created_at
         ? new Date(row.created_at)
         : new Date(),
     };
   }
+
+  async updateProfile(
+  userId: string,
+  data: {
+    store?: string | null;
+    review?: number | null;
+  }
+): Promise<void> {
+  const updateData: Record<string, unknown> = {};
+
+  if (data.store !== undefined) {
+    updateData.store = data.store;
+  }
+
+  if (data.review !== undefined) {
+    updateData.review = data.review;
+  }
+
+  await this.db
+    .update(users)
+    .set(updateData)
+    .where(eq(users.id, userId));
+}
 }

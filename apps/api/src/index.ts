@@ -10,8 +10,8 @@ const app = new Hono();
 app.use(
     "*",
     cors({
-    origin: "https://jirou-dw3.pages.dev",
-    allowMethods: ["GET", "POST", "PUT", "DELETE"],
+    origin: ["https://jirou-dw3.pages.dev", "http://localhost:3000"],
+    allowMethods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     allowHeaders: ["Content-Type", "Authorization"],
     credentials: true,
     })
