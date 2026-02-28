@@ -1,34 +1,74 @@
-import React from 'react';
+"use client";
+
+import Image from "next/image";
 import styles from './index.module.css';
 
-export const StampCard = () => {
-    const stampsRow1 = Array(7).fill(0);
-    const stampsRow2 = Array(7).fill(0);
+type Props = {
+    count?: number;
+};
+
+const TOTAL_STAMPS = 10;
+
+export const StampCard = ({ count = 0 }: Props) => {
+    const stampsRow1 = Array(5).fill(0);
+    const stampsRow2 = Array(5).fill(0);
+    const filledCount = Math.max(0, count);
+    const cardCount = Math.max(1, Math.ceil(filledCount / TOTAL_STAMPS));
 
     return (
         <div className={styles.wrapper}>
-            <div className={styles.card}>
-                {/* タイトル */}
-                <h2 className={styles.title}>スタンプ</h2>
+            {Array.from({ length: cardCount }).map((_, cardIndex) => {
+                const startNumber = cardIndex * TOTAL_STAMPS + 1;
+                return (
+                    <div key={`card-${cardIndex}`} className={styles.card}>
+                        <div className={styles.stampArea}>
+                            <div className={styles.row}>
+                                {stampsRow1.map((_, i) => {
+                                    const number = startNumber + i;
+                                    const filled = number <= filledCount;
+                                    return (
+                                        <div key={`r1-${cardIndex}-${i}`} className={styles.stampSquare}>
+                                            {filled ? (
+                                                <Image
+                                                    src="/stump.png"
+                                                    alt=""
+                                                    fill
+                                                    sizes="40px"
+                                                    className={styles.stampImage}
+                                                />
+                                            ) : (
+                                                <span className={styles.stampNumber}>{number}</span>
+                                            )}
+                                        </div>
+                                    );
+                                })}
+                            </div>
 
-                <div className={styles.stampArea}>
-                    {/* スタンプ〇部分 */}
-                    <div className={styles.row}>
-                        {stampsRow1.map((_, i) => (
-                        <div key={`r1-${i}`} className={styles.stampCircle} />
-                        ))}
+                            <div className={styles.row}>
+                                {stampsRow2.map((_, i) => {
+                                    const number = startNumber + 5 + i;
+                                    const filled = number <= filledCount;
+                                    return (
+                                        <div key={`r2-${cardIndex}-${i}`} className={styles.stampSquare}>
+                                            {filled ? (
+                                                <Image
+                                                    src="/stump.png"
+                                                    alt=""
+                                                    fill
+                                                    sizes="40px"
+                                                    className={styles.stampImage}
+                                                />
+                                            ) : (
+                                                <span className={styles.stampNumber}>{number}</span>
+                                            )}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
                     </div>
-
-                    {/* 線 */}
-                    <hr className={styles.divider} />
-
-                    <div className={styles.row}>
-                        {stampsRow2.map((_, i) => (
-                        <div key={`r2-${i}`} className={styles.stampCircle} />
-                        ))}
-                    </div>
-                </div>
-            </div>
+                );
+            })}
         </div>
     );
 };

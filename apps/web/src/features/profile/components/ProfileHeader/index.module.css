@@ -11,6 +11,8 @@
     background-color: #d1d5db;
     border-radius: 50%;
     flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
 }
 
 .profileInfo {
