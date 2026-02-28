@@ -3,11 +3,15 @@ import { getCalls } from "@/application/calls/getCalls";
 import type { CallResponse } from "@/infrastructure/calls/callsApi";
 import { speakCallLines } from "@/infrastructure/voicevox/voicevoxClient";
 
-const mapLevelLabel = (value: number | null | undefined) => {
+const mapLevelLabel = (value: number | string | null | undefined) => {
   if (value === null || value === undefined) {
     return "";
   }
-  switch (value) {
+  const normalized = Number(value);
+  if (Number.isNaN(normalized)) {
+    return "";
+  }
+  switch (normalized) {
     case 0:
       return "少なめ";
     case 1:
@@ -24,19 +28,27 @@ const mapLevelLabel = (value: number | null | undefined) => {
 const formatLine = (label: string, valueLabel: string) =>
   valueLabel ? `${label} ${valueLabel}` : label;
 
-const buildLines = (call: CallResponse) => {
-  const karameLabel = mapLevelLabel(call.karame);
-  const karameLine =
-    karameLabel && karameLabel !== "なし"
-      ? formatLine("カラメ", karameLabel)
-      : "";
+const buildMenuLine = (call: CallResponse) => {
+  if (call.masimasi === 1) {
+    return "全マシマシ";
+  }
+  if (call.masi === 1) {
+    return "全マシ";
+  }
+  return "";
+};
 
+const buildLines = (call: CallResponse) => {
+  const menuLine = buildMenuLine(call);
+  if (menuLine) {
+    return [menuLine];
+  }
   return [
     formatLine("ニンニク", mapLevelLabel(call.ninniku)),
     formatLine("ヤサイ", mapLevelLabel(call.yasai)),
     formatLine("アブラ", mapLevelLabel(call.abura)),
-    karameLine,
-  ].filter((line) => line.length > 0);
+    formatLine("カラメ", mapLevelLabel(call.karame)),
+  ];
 };
 
 export const useCallsPlay = () => {
@@ -50,9 +62,12 @@ export const useCallsPlay = () => {
       if (cancelled) {
         return;
       }
-      setCalls(data);
-      if (data.length > 0) {
-        setSelectedId(String(data[0].id));
+      const sorted = [...data].sort(
+        (a, b) => Number(b.id) - Number(a.id)
+      );
+      setCalls(sorted);
+      if (sorted.length > 0) {
+        setSelectedId(String(sorted[0].id));
       }
     };
 
