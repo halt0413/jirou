@@ -23,10 +23,23 @@ export const loginRequest = async (
     body: JSON.stringify(input),
   });
 
-  const data = (await res.json()) as LoginResponse & { error?: string };
+  let data: (LoginResponse & { error?: unknown }) | null = null;
+  let rawText = "";
+  try {
+    rawText = await res.text();
+    data = rawText ? (JSON.parse(rawText) as LoginResponse & { error?: unknown }) : null;
+  } catch {
+    data = null;
+  }
 
-  if (!res.ok) {
-    throw new Error(data.error ?? "ログインに失敗しました");
+  if (!res.ok || !data?.accessToken) {
+    const message =
+      typeof data?.error === "string"
+        ? data.error
+        : data?.error
+        ? JSON.stringify(data.error)
+        : rawText || "ログインに失敗しました";
+    throw new Error(message);
   }
 
   return data;
