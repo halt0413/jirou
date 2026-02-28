@@ -24,7 +24,7 @@ export const BottomNav = () => {
     const navItems = [
         { name: 'マップ', href: '/map', icon: Map },
         { name: 'ホーム', href: '/profile', icon: Home },
-        { name: 'コール', href: '/call-register', icon: MoreHorizontal }, 
+        { name: 'コール', href: '/call-play', icon: MoreHorizontal }, 
     ];
 
     return (
