@@ -59,3 +59,4 @@ export const updateStoreSchema = z
 export const deleteStoreSchema = z.object({
   id: z.number().int().positive({ message: "id は正の整数である必要があります" }),
 });
+

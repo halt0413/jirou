@@ -6,4 +6,6 @@ export interface PostsRepository {
     findByPostId(postId: number): Promise<Posts>;
     update(post: Posts): Promise<number>;
     findByStore(storeName: string): Promise<Posts[]>
+    getAverageScore(storeName: string): Promise<number>;
 }
+

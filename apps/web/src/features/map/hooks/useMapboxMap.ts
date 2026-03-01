@@ -33,7 +33,7 @@ export const useMapboxMap = ({ container, center, zoom, style, onReady }: Option
       map.remove();
       mapRef.current = null;
     };
-  }, [container, center, zoom, style, onReady]);
+  }, [container]);
 
   return { mapRef };
 };

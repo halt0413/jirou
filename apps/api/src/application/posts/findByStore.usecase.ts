@@ -12,3 +12,11 @@ export class FindPostsByStoreUseCase {
         return post
     }
 }
+
+export class GetAvgScoreByStoreUseCase {
+  constructor(private postRepo: PostsRepository) {}
+
+  async execute(storeName: string): Promise<number> {
+    return await this.postRepo.getAverageScore(storeName);
+  }
+}
