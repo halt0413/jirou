@@ -1,6 +1,6 @@
 .wrap {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin: 6px 0 12px;
+  gap: 8px;
+  margin: 4px 0 10px;
 }
