@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 12px;
+  padding: 6px 8px;
 }
 
 .right {
@@ -12,20 +12,20 @@
 }
 
 .refund {
-  margin-top: 22px;
-  width: 52px;
+  margin-top: 14px;
+  width: 44px;
 }
 
 .coin {
-  margin-top: 22px;
-  width: 34px;
+  margin-top: 14px;
+  width: 28px;
 }
 
 .bill {
-  margin-top: 22px;
-  width: 62px;
+  margin-top: 14px;
+  width: 54px;
 }
 
 .ticketIcon {
-  width: 118px;
+  width: 100px;
 }
