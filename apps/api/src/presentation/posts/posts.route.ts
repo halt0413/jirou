@@ -2,7 +2,7 @@ import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { Env } from "../../types/env";
 import { createContainer } from "../../container";
-import { CreatePostSchema, updatePostSchema, userIdGetPostsSchema, } from "@repo/schemas";
+import { CreatePostSchema, updatePostSchema, userIdGetPostsSchema,  } from "@repo/schemas";
 
 const postsRoute = new Hono<{Bindings:Env}>();
 
@@ -59,6 +59,20 @@ postsRoute.get("store/:storeName", async (c) => {
     try {
         const posts = await findPostsByStoreUseCase.execute(storeName);
         return c.json(posts, 200);
+    } catch (error) {
+        console.log(error)
+        return c.json({error: "エラー" }, 500);
+    }
+})
+
+postsRoute.get("store/:storeName/avg", async (c) => {
+    const storeName = c.req.param("storeName");
+
+    const { getAvgScoreByStoreUseCase } = createContainer(c.env);
+
+    try {
+        const avgScore = await getAvgScoreByStoreUseCase.execute(storeName);
+        return c.json({ avgScore }, 200);
     } catch (error) {
         console.log(error)
         return c.json({error: "エラー" }, 500);

@@ -1,5 +1,5 @@
 //d1_posts.repository
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import type { PostsRepository } from "../../domain/posts/posts.repository";
 import { Posts } from "../../domain/posts/posts.entity";
 import * as schema from "../db/schema";
@@ -88,4 +88,13 @@ export class D1PostsRepository implements PostsRepository {
             new Date(row.createdAt)
         ));
     }
+
+   async getAverageScore(storeName: string): Promise<number> {
+    const result = await this.db
+        .select({ avgScore: sql<number>`AVG(${schema.posts.score})` })
+        .from(schema.posts)
+        .where(eq(schema.posts.storeName, storeName));
+
+    return result[0]?.avgScore ?? 0;
+}
 }
