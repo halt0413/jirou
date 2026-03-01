@@ -32,6 +32,7 @@ import { UpdateStoreUseCase } from "./application/stores/update_store.usecase";
 import { DeleteStoreUseCase } from "./application/stores/delete_store.usecase";
 import { GetProfileUseCase } from "./application/users/getProfile.usecase";
 import { FindPostsByStoreUseCase } from "./application/posts/findByStore.usecase";
+import { GetAvgScoreByStoreUseCase } from "./application/posts/findByStore.usecase";
 
 export const createContainer = (env: Env) => {
   const db = drizzle(env.DB, { schema });
@@ -62,6 +63,7 @@ export const createContainer = (env: Env) => {
       storageRepository
     ),
     findPostsByStoreUseCase: new FindPostsByStoreUseCase(postRepository),
+    getAvgScoreByStoreUseCase: new GetAvgScoreByStoreUseCase(postRepository),
 
     // users
     registerUserUseCase: new RegisterUseCase(
