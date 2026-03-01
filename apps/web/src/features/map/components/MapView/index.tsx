@@ -1,50 +1,44 @@
 "use client";
 
 import styles from "./index.module.css";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { useMapboxMap } from "../../hooks/useMapboxMap";
-import { useCurrentLocationOnMap } from "../../hooks/useCurrentLocationOnMap";
-import { useStoresOnMap } from "../../hooks/useStoresOnMap";
 import PostModal from "../PostModalContainer";
 import type { Store } from "@/infrastructure/stores/fetchStores";
+import { useMapViewController } from "../../hooks/useMapViewController";
 
 export default function MapView() {
-  const [container, setContainer] = useState<HTMLDivElement | null>(null);
   const [selectedStore, setSelectedStore] = useState<Store | null>(null);
-  const { loadAndRender } = useStoresOnMap({
+
+  const { container, setRef, isLoading, error, onReady } = useMapViewController({
+    zoomCurrentLocation: 13,
     onPostClick: (store) => setSelectedStore(store),
   });
 
-  const setRef = useCallback((node: HTMLDivElement | null) => {
-    setContainer(node);
-  }, []);
-
-  const { goToCurrentLocation } = useCurrentLocationOnMap({ zoom: 15 });
-
+  // マップの初期位置
   useMapboxMap({
-  container,
-  style: "mapbox://styles/mapbox/streets-v12",
-  center: [135.4983, 34.7039],
-  zoom: 10,
-  onReady: (map) => {
-    const run = async () => {
-      if (!map.loaded()) await new Promise<void>((r) => map.once("load", () => r()));
-
-      // 現在地の中心移動＋現在地ピン
-      await goToCurrentLocation(map);
-
-      // 店舗ピン表示
-      await loadAndRender(map);
-    };
-
-    run().catch(console.log);
-  },
-});
+    container,
+    style: "mapbox://styles/mapbox/streets-v12",
+    center: [135.4983, 34.7039],
+    zoom: 10,
+    onReady,
+  });
 
   return (
     <>
-      <div ref={setRef} className={styles.map} />;
+      {/* マップ */}
+      <div ref={setRef} className={styles.map} />
 
+      {/* ローディングオーバーレイ */}
+      {isLoading && (
+        <div className={styles.loadingOverlay}>
+          <div className={styles.spinner} />
+          <p className={styles.loadingText}>現在地を取得してマップを準備中…</p>
+          {error && <p className={styles.errorText}>{error}</p>}
+        </div>
+      )}
+
+      {/* 口コミモーダル */}
       {selectedStore && (
         <PostModal
           storeName={selectedStore.name}
