@@ -64,6 +64,7 @@ export const CallRegisterPage = ({
 
         <OptionGroup
           title="ニンニク"
+          description="刻みニンニクの量です。二郎の代名詞とも言えるトッピングで、パンチが効きます！"
           options={ninnikuLevels}
           value={ninniku}
           onChange={onNinnikuChange}
@@ -71,6 +72,7 @@ export const CallRegisterPage = ({
         />
         <OptionGroup
           title="ヤサイ"
+          description="もやしとキャベツの量です。「マシ」にすると野菜が山盛りになって出てきます。"
           options={yasaiLevels}
           value={yasai}
           onChange={onYasaiChange}
@@ -78,6 +80,7 @@ export const CallRegisterPage = ({
         />
         <OptionGroup
           title="アブラ"
+          description="背脂の量です。スープに強烈なコクをプラスしたい場合におすすめです。"
           options={aburaLevels}
           value={abura}
           onChange={onAburaChange}
@@ -85,6 +88,7 @@ export const CallRegisterPage = ({
         />
         <OptionGroup
           title="カラメ"
+          description="醤油ダレの量（味の濃さ）です。ヤサイを増やして味が薄まりそうな時など、味を濃くしたい場合に選びます。"
           options={karameLevels}
           value={karame}
           onChange={onKarameChange}
