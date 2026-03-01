@@ -45,6 +45,6 @@
   }
 }
 
-:global(.mapboxgl-ctrl-bottom-right) {
+.map :global(.mapboxgl-ctrl-bottom-right) {
   bottom: 80px;
 }
