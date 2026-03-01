@@ -1,16 +1,16 @@
 .button {
-  margin-top: 32px;
-  height: 58px;
+  margin-top: 20px;
+  height: 48px;
   border: none;
   border-radius: 999px;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 800;
   letter-spacing: 0.04em;
   color: #fff;
   background: #ef9046;
   box-shadow: none;
   cursor: pointer;
-  width: 84%;
+  width: 80%;
   margin-left: auto;
   margin-right: auto;
 }
