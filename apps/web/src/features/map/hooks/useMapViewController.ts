@@ -42,6 +42,9 @@ export function useMapViewController({ zoomCurrentLocation, onPostClick }: Args)
 
           // 日本語化
           applyJapaneseLabels(map);
+          // 簡略化
+          hideRoadLabels(map);
+          hideRoadShields(map);
 
           await goToCurrentLocation(map);
           await loadAndRender(map);
@@ -81,4 +84,37 @@ function applyJapaneseLabels(map: mapboxgl.Map) {
 
     map.setLayoutProperty(layer.id, "text-field", ["coalesce", ["get", "name_ja"], ["get", "name"]]);
   });
+}
+
+// 道路名をmapboxから消す
+function hideRoadLabels(map: mapboxgl.Map) {
+  const layers = map.getStyle().layers ?? [];
+
+  for (const layer of layers) {
+    // 道路名ラベルだけ対象（symbolレイヤー）
+    if (
+      layer.type === "symbol" &&
+      layer.id.includes("road-label")
+    ) {
+      map.setLayoutProperty(layer.id, "visibility", "none");
+    }
+  }
+}
+
+// 路線番号をmapboxから消す
+function hideRoadShields(map: mapboxgl.Map) {
+  const layers = map.getStyle().layers ?? [];
+
+  for (const layer of layers) {
+    // ルート番号の “シールド” 系をまとめて消す
+    if (
+      layer.type === "symbol" &&
+      (layer.id.includes("road-shield") ||
+        layer.id.includes("road-number") ||
+        layer.id.includes("route") ||
+        layer.id.includes("shield"))
+    ) {
+      map.setLayoutProperty(layer.id, "visibility", "none");
+    }
+  }
 }
