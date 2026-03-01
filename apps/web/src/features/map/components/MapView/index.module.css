@@ -44,3 +44,7 @@
     transform: rotate(360deg);
   }
 }
+
+:global(.mapboxgl-ctrl-bottom-right) {
+  bottom: 80px;
+}

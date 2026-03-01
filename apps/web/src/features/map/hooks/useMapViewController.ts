@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
-import type mapboxgl from "mapbox-gl";
 import type { Store } from "@/infrastructure/stores/fetchStores";
 import { useCurrentLocationOnMap } from "./useCurrentLocationOnMap";
 import { useStoresOnMap } from "./useStoresOnMap";
