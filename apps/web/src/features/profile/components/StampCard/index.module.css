@@ -6,7 +6,7 @@
 .card {
     background-color: white;
     border-radius: 2px;
-    padding: 16px;
+    padding: 12px;
     border: 5px solid #8a4a40;
 }
 
@@ -14,18 +14,18 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .title {
     font-weight: 900;
-    font-size: 18px;
+    font-size: 16px;
     letter-spacing: 0.1em;
     color: #000000;
 }
 
 .pageIndicator {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 800;
     color: #6b7280;
 }
@@ -33,21 +33,21 @@
 .stampArea {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin: 0 -16px;
+    gap: 6px;
+    margin: 0 -12px;
 }
 
 .row {
     display: flex;
     justify-content: space-between;
-    padding: 0 8px;
-    gap: 6px;
+    padding: 0 6px;
+    gap: 4px;
 }
 
 .stampSquare {
-    width: 56px;
-    height: 56px;
-    border-radius: 8px;
+    width: 48px;
+    height: 48px;
+    border-radius: 7px;
     border: 2px solid #bdbdbd;
     background: #ffffff;
     position: relative;
@@ -55,7 +55,7 @@
 }
 
 .stampNumber {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     color: #d0d0d0;
 }

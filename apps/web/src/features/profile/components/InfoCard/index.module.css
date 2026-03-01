@@ -2,23 +2,23 @@
     background-color: white;
     border: 2px solid #000000;
     border-radius: 15px;
-    padding: 10px;
-    min-height: 72px;
+    padding: 8px;
+    min-height: 64px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
 .title {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: bold;
     color: #000000;
 }
 
 .value {
     text-align: right;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 400;
-    margin-top: 6px;
+    margin-top: 4px;
     letter-spacing: 0.05em;
 }
