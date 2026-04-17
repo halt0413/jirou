@@ -4,6 +4,7 @@ import type { Env } from "../../types/env";
 import type { Store } from "../../domain/stores/store.entity";
 import { createContainer } from "../../container";
 import { createStoreSchema, updateStoreSchema, deleteStoreSchema, getStoreSchema } from "@repo/schemas";
+import { authMiddleware } from "../middlewares/authMiddleware";
 
 export const storesRoute = new Hono<{ Bindings: Env }>();
 
@@ -27,10 +28,10 @@ storesRoute.get("/:id", zValidator("param", getStoreSchema), async (c) => {
 });
 
 // 作成 (POST)
-storesRoute.post("/", zValidator("json", createStoreSchema), async (c) => {
+storesRoute.post("/", authMiddleware, zValidator("json", createStoreSchema), async (c) => {
   const { createStoreUseCase } = createContainer(c.env);
-  const payload = c.get("jwtPayload");
-  const userId = payload.sub;
+  const payload = c.get("jwtPayload") as { sub?: string } | undefined;
+  const userId = payload?.sub;
   if (!userId) return c.json({ message: "Unauthorized" }, 401);
 
   const body = c.req.valid("json");
@@ -54,9 +55,9 @@ storesRoute.post("/", zValidator("json", createStoreSchema), async (c) => {
 });
 
 // 更新 (PUT)
-storesRoute.put("/", zValidator("json", updateStoreSchema), async (c) => {
+storesRoute.put("/", authMiddleware, zValidator("json", updateStoreSchema), async (c) => {
   const { id, name, lat, lng } = c.req.valid("json");
-  const payload = c.get("jwtPayload");
+  const payload = c.get("jwtPayload") as { sub?: string } | undefined;
   const userId = payload?.sub;
   if (!userId) return c.json({ message: "Unauthorized" }, 401);
 
@@ -70,9 +71,9 @@ storesRoute.put("/", zValidator("json", updateStoreSchema), async (c) => {
 });
 
 // 削除 (DELETE)
-storesRoute.delete("/", zValidator("json", deleteStoreSchema), async (c) => {
+storesRoute.delete("/", authMiddleware, zValidator("json", deleteStoreSchema), async (c) => {
   const { id } = c.req.valid("json");
-  const payload = c.get("jwtPayload");
+  const payload = c.get("jwtPayload") as { sub?: string } | undefined;
   const userId = payload?.sub;
   if (!userId) return c.json({ message: "Unauthorized" }, 401);
 

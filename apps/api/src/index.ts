@@ -20,7 +20,6 @@ app.use(
 
 app.use("/posts/*", authMiddleware);
 app.use("/calls/*", authMiddleware);
-app.use("/stores/*", authMiddleware);
 
 app.route("/posts", postsRoute);
 app.route("/users", usersRoute);

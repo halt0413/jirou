@@ -6,10 +6,11 @@ export async function fetchStoresProxy() {
   if (!base) throw new Error("Missing NEXT_PUBLIC_API_BASE_URL");
 
   const url = new URL("/stores", base).toString();
-  const token = await createBearerToken();
+  const secret = process.env.JWT_SECRET;
+  const token = secret ? await createBearerToken() : null;
 
   const res = await fetch(url, {
-    headers: { Authorization: `Bearer ${token}` },
+    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
     cache: "no-store",
   });
 
